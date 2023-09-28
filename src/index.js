@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import "../../table_finder/src/assets/css/main.css"
+import "../../TableFinderApp/src/assets/css/main.css"
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
