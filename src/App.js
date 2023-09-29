@@ -1,3 +1,5 @@
+import BranchManage from "./adminComp/BranchManage/BranchManage";
+import Dashboard from "./adminComp/Dashboard/Dashboard";
 import Login from "./adminComp/adminLogin/Login";
 import OtpVerify from "./adminComp/adminLogin/OtpVerify";
 import ForgotPass from "./adminComp/adminLogin/forgotPass";
@@ -29,6 +31,14 @@ function App() {
         <Route
           path="/admin/login/forgot-Password/OTP-verification"
           element={<OtpVerify />}
+        />
+         <Route
+          path="/admin/dashboard"
+          element={<Dashboard />}
+        />
+        <Route
+          path="/admin/dashboard/branch-management"
+          element={<BranchManage />}
         />
       </Routes>
     </BrowserRouter>
