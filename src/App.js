@@ -1,8 +1,3 @@
-import BranchManage from "./adminComp/BranchManage/BranchManage";
-import Dashboard from "./adminComp/Dashboard/Dashboard";
-import Login from "./adminComp/adminLogin/Login";
-import OtpVerify from "./adminComp/adminLogin/OtpVerify";
-import ForgotPass from "./adminComp/adminLogin/forgotPass";
 import AddCard from "./appComp/AddCard";
 import AddProduct from "./appComp/AddProduct";
 import Cart from "./appComp/Cart";
@@ -23,23 +18,6 @@ function App() {
         <Route path="/app/home/payment-method/Add-card" element={<AddCard />} />
         <Route path="/app/home/order-Confirmed" element={<OrderConfirmed />} />
         <Route path="/app/home/rate-order" element={<RateOrder />} />
-
-        {/* Admin Routes */}
-
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin/login/forgot-Password" element={<ForgotPass />} />
-        <Route
-          path="/admin/login/forgot-Password/OTP-verification"
-          element={<OtpVerify />}
-        />
-         <Route
-          path="/admin/dashboard"
-          element={<Dashboard />}
-        />
-        <Route
-          path="/admin/dashboard/branch-management"
-          element={<BranchManage />}
-        />
       </Routes>
     </BrowserRouter>
   );

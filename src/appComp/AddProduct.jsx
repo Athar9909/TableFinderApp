@@ -6,16 +6,23 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [cousine, setCousine] = useState([]);
+  const [items, setItems] = useState([]);
 
+  let cartItem = localStorage.getItem("cart");
   useEffect(() => {
     GetCuisinesInfo();
+    setItems(cartItem);
   }, []);
-
   const GetCuisinesInfo = async () => {
     const { data } = await getCousinesDetails(id);
     if (!data?.error) {
       setCousine(data?.results?.cuisine);
+      setItems([...items, data.results.cuisine]);
     }
+  };
+
+  const addToCart = async () => {
+    localStorage.setItem("cart", JSON.stringify(items));
   };
 
   return (
@@ -47,42 +54,35 @@ const AddProduct = () => {
 
         <div className="add_product_filters comman_space">
           <div className="row filters_box">
-            <div className="col-12 d-flex align-items-start justify-content-between pt-3 pb-2">
-              <div className="filter_heading">
-                <h3>Select Size</h3>
-                <span>Select 1</span>
-              </div>
-              <div className="required_tag">Required</div>
-            </div>
-            <div className="col-12">
-              <div className="row filters_inner">
-                <div className="col-12">
-                  <div className="filters_radio_btns">
-                    <input
-                      type="radio"
-                      id="radio"
-                      name="radio"
-                      className="d-none"
-                    />
-                    <label htmlFor="radio">Medium</label>
+            {cousine?.addOns?.map((itm, id) => (
+              <div className="col-12 d-flex align-items-start justify-content-between pt-3 pb-2">
+                <div className="filter_heading">
+                  <h3>{itm?.name}</h3>
+                  <span>Select 1</span>
+
+                  <div className="col-12">
+                    <div className="row filters_inner">
+                      {itm?.options?.map((i, d) => (
+                        <div className="col-12">
+                          <div className="filters_radio_btns">
+                            <input
+                              type="radio"
+                              id={i?._id}
+                              name={itm?.name}
+                              className="d-none"
+                            />
+                            <label htmlFor={i?._id}>{i?.name}</label>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div className="col-12">
-                  <div className="filters_radio_btns">
-                    <input
-                      type="radio"
-                      defaultChecked=""
-                      id="radio1"
-                      name="radio"
-                      className="d-none"
-                    />
-                    <label htmlFor="radio1">Large</label>
-                  </div>
-                </div>
+                <div className="required_tag">Required</div>
               </div>
-            </div>
+            ))}
           </div>
-          <div className="row filters_box">
+          {/* <div className="row filters_box">
             <div className="col-12 d-flex align-items-start justify-content-between pt-3 pb-2">
               <div className="filter_heading">
                 <h3>Select Side</h3>
@@ -233,13 +233,14 @@ const AddProduct = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <a
           className="view_cart_btn row text-center text-decoration-none"
           onClick={() => {
             navigate("/app/home/cart");
+            addToCart();
           }}>
           <div className="col-2">
             <div className="btn_icon">
@@ -256,7 +257,6 @@ const AddProduct = () => {
             <div className="btn_count_box text-center">1</div>
           </div>
         </a>
-        
       </div>
     </div>
   );

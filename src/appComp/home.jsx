@@ -147,6 +147,7 @@ const Home = () => {
               </li>
             ))}
           </ul>
+
           <div className="tab-content" id="myTabContent">
             <div className="tab-pane fade show active">
               <div className="Breakfast_menu_card">
@@ -169,9 +170,7 @@ const Home = () => {
                           src={require("../assets/img/prdt1.png")}
                           alt=""
                         />
-                        <a
-                          className="add_product shadow"
-                          href="add-product.html">
+                        <a className="add_product shadow">
                           <img src={require("../assets/img/plus.png")} alt="" />
                         </a>
                       </div>
@@ -181,6 +180,7 @@ const Home = () => {
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
