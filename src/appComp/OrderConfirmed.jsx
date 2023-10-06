@@ -84,10 +84,10 @@ const OrderConfirmed = () => {
                   </div>
                   <div className="row py-1">
                     <div className="col-6">
-                      <div className="summary_text">Order Reference Id</div>
+                      <div className="summary_text">Table Id</div>
                     </div>
                     <div className="col-6">
-                      <div className="summary_text text-end">#2342AA34</div>
+                      <div className="summary_text text-end"> {details?.tableId}</div>
                     </div>
                   </div>
                 </div>
