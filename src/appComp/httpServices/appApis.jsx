@@ -111,10 +111,33 @@ export async function changeBuyerStatus(id) {
     return { error };
   }
 }
-export async function AddCategory(formData) {
+
+export async function getCartDetails(id) {
+  try {
+    const { data } = await appHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}api/zitex/getMyCart` + "/" + id
+    );
+    console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) {
+      console.log(error?.response);
+      Swal.fire({
+        title: "Error!",
+        text: "",
+        icon: "error",
+        confirmButtonText: "Okay",
+        confirmButtonColor: "#e25829",
+      });
+    }
+    return { error };
+  }
+}
+export async function AddInCart(formData) {
   try {
     const { data } = await appHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}api/admin/newCategory`,
+      `${process.env.REACT_APP_APIENDPOINT}api/zitex/addToCart`,
       formData
     );
     console.log(data);
@@ -141,7 +164,36 @@ export async function AddCategory(formData) {
     return { error };
   }
 }
-
+export async function CheckoutItems(formData) {
+  try {
+    const { data } = await appHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}api/zitex/checkout`,
+      formData
+    );
+    console.log(data);
+    if (data?.error) {
+      Swal.fire({
+        title: data?.message,
+        icon: "error",
+        confirmButtonText: "Okay",
+        confirmButtonColor: "#e25829",
+      });
+    }
+    return { data };
+  } catch (error) {
+    if (error.response) {
+      console.log(error?.response);
+      Swal.fire({
+        title: "Error!",
+        text: "",
+        icon: "error",
+        confirmButtonText: "Okay",
+        confirmButtonColor: "#e25829",
+      });
+    }
+    return { error };
+  }
+}
 export async function AllCategory() {
   try {
     const { data } = await appHttpService.post(

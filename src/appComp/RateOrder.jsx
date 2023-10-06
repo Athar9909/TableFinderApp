@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const RateOrder = () => {
   const navigate = useNavigate();
+  let id = localStorage.getItem("tableId");
   return (
     <div>
       <div className="app_main">
@@ -96,7 +97,7 @@ const RateOrder = () => {
               <a
                 className="comman_btn w-100 text-decoration-none"
                 onClick={() => {
-                  navigate("/app/home");
+                  navigate(`/${id}`);
                 }}>
                 Submit
               </a>

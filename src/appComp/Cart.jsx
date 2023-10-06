@@ -1,9 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CheckoutItems, getCartDetails } from "./httpServices/appApis";
 
 const Cart = () => {
   const [orderType, setOrderType] = useState(true);
   const navigate = useNavigate();
+  const [cart, setCart] = useState([]);
+  let id = localStorage.getItem("tableId");
+
+  useEffect(() => {
+    GetCart();
+  }, []);
+
+  const GetCart = async () => {
+    const { data } = await getCartDetails(id);
+    if (!data?.error) {
+      setCart(data?.results?.cart);
+    }
+  };
+
+  const Checkout = async () => {
+    let Data = {
+      tableId: id,
+      cuisines: cart?.cuisines,
+      type: orderType ? "Take Away" : "Dining",
+      total: 3.4,
+    };
+    navigate("/app/home/payment-method", {
+      state: Data,
+    });
+  };
+
   return (
     <div>
       {orderType ? (
@@ -28,66 +55,38 @@ const Cart = () => {
             </div>
             <div className="row cart_product">
               <div className="col-12">
-                <div className="row Breakfast_single align-items-center">
-                  <div className="col">
-                    <div className="menu_card_data">
-                      <h2>McFlurry (Oreo)®</h2>
-                      <span>7.89 EGP</span>
+                {cart?.cuisines?.map((itm, ind) => (
+                  <div className="row Breakfast_single align-items-center">
+                    <div className="col">
+                      <div className="menu_card_data">
+                        <h2>{itm?.cuisineId?.name}</h2>
+                        <span>EGP {itm?.cuisineId?.price}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="px-0 col-auto">
-                    <div className="quantity_box">
-                      <span>-</span>
-                      <input defaultValue={1} type="text" />
-                      <span>+</span>
+                    <div className="px-0 col-auto">
+                      <div className="quantity_box">
+                        <span>-</span>
+                        <input defaultValue={itm?.quantity} type="text" />
+                        <span>+</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-auto">
-                    <div className="menu_product position-relative">
-                      <img
-                        className="mp_img"
-                        src={require("../assets/img/prdt1.png")}
-                        alt=""
-                      />
-                      <a className="add_product shadow" href="add-product.html">
+                    <div className="col-auto">
+                      <div className="menu_product position-relative">
                         <img
-                          src={require("../assets/img/pencil-fill.png")}
+                          className="mp_img"
+                          src={require("../assets/img/prdt1.png")}
                           alt=""
                         />
-                      </a>
+                        <a className="add_product shadow">
+                          <img
+                            src={require("../assets/img/pencil-fill.png")}
+                            alt=""
+                          />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row Breakfast_single align-items-center">
-                  <div className="col">
-                    <div className="menu_card_data">
-                      <h2>McFlurry (Oreo)®</h2>
-                      <span>7.89 EGP</span>
-                    </div>
-                  </div>
-                  <div className="px-0 col-auto">
-                    <div className="quantity_box">
-                      <span>-</span>
-                      <input defaultValue={1} type="text" />
-                      <span>+</span>
-                    </div>
-                  </div>
-                  <div className="col-auto">
-                    <div className="menu_product position-relative">
-                      <img
-                        className="mp_img"
-                        src={require("../assets/img/prdt2.png")}
-                        alt=""
-                      />
-                      <a className="add_product shadow" href="add-product.html">
-                        <img
-                          src={require("../assets/img/pencil-fill.png")}
-                          alt=""
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             <div className="main_head my-3">Summary</div>
@@ -156,7 +155,10 @@ const Cart = () => {
                     <div className="total_count">Total</div>
                   </div>
                   <div className="col-6">
-                    <div className="total_count text-end">EGP 15.14</div>
+                    <div className="total_count text-end">
+                      {" "}
+                      EGP {cart?.total}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -180,7 +182,7 @@ const Cart = () => {
                 <a
                   className="comman_btn text-decoration-none"
                   onClick={() => {
-                    navigate("/app/home/payment-method");
+                    Checkout();
                   }}>
                   Checkout
                 </a>
@@ -193,7 +195,7 @@ const Cart = () => {
           <div className="checkout comman_space overflow-hidden">
             <div className="row top_bar py-3 align-items-center">
               <div className="col-2">
-                <a className="back_btn" href="cart.html">
+                <a className="back_btn">
                   <img src={require("../assets/img/back.png")} alt="" />
                 </a>
               </div>
@@ -209,52 +211,38 @@ const Cart = () => {
             </div>
             <div className="row cart_product">
               <div className="col-12">
-                <div className="row Breakfast_single align-items-center">
-                  <div className="col">
-                    <div className="menu_card_data">
-                      <h2>McFlurry (Oreo)®</h2>
-                      <span>7.89 EGP</span>
+                {cart?.cuisines?.map((itm, ind) => (
+                  <div className="row Breakfast_single align-items-center">
+                    <div className="col">
+                      <div className="menu_card_data">
+                        <h2>{itm?.cuisineId?.name}</h2>
+                        <span>{itm?.cuisineId?.price}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-auto">
-                    <div className="menu_product position-relative">
-                      <img
-                        className="mp_img"
-                        src={require("../assets/img/prdt1.png")}
-                        alt=""
-                      />
-                      <a className="add_product shadow" href="add-product.html">
+                    <div className="px-0 col-auto">
+                      <div className="quantity_box">
+                        <span>-</span>
+                        <input defaultValue={itm?.quantity} type="text" />
+                        <span>+</span>
+                      </div>
+                    </div>
+                    <div className="col-auto">
+                      <div className="menu_product position-relative">
                         <img
-                          src={require("../assets/img/pencil-fill.png")}
+                          className="mp_img"
+                          src={require("../assets/img/prdt1.png")}
                           alt=""
                         />
-                      </a>
+                        <a className="add_product shadow">
+                          <img
+                            src={require("../assets/img/pencil-fill.png")}
+                            alt=""
+                          />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row Breakfast_single align-items-center">
-                  <div className="col">
-                    <div className="menu_card_data">
-                      <h2>McFlurry (Oreo)®</h2>
-                      <span>7.89 EGP</span>
-                    </div>
-                  </div>
-                  <div className="col-auto">
-                    <div className="menu_product position-relative">
-                      <img
-                        className="mp_img"
-                        src={require("../assets/img/prdt1.png")}
-                        alt=""
-                      />
-                      <a className="add_product shadow" href="add-product.html">
-                        <img
-                          src={require("../assets/img/pencil-fill.png")}
-                          alt=""
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             <div className="main_head my-3">Summary</div>
@@ -323,7 +311,9 @@ const Cart = () => {
                     <div className="total_count">Total</div>
                   </div>
                   <div className="col-6">
-                    <div className="total_count text-end">EGP 15.14</div>
+                    <div className="total_count text-end">
+                      EGP {cart?.total}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -350,7 +340,7 @@ const Cart = () => {
                 <a
                   className="comman_btn text-decoration-none"
                   onClick={() => {
-                    navigate("/app/home/payment-method");
+                    Checkout();
                   }}>
                   Place Order
                 </a>

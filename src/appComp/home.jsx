@@ -15,6 +15,7 @@ const Home = () => {
     GetCuisines();
   }, []);
   const { id } = useParams();
+  localStorage.setItem("tableId", id);
   useEffect(() => {
     GetCuisines();
   }, [cateId]);
@@ -164,7 +165,11 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="col-auto">
-                      <div className="menu_product position-relative">
+                      <div
+                        className="menu_product position-relative"
+                        onClick={() => {
+                          navigate(`/app/home/add-product/${itm?._id}`);
+                        }}>
                         <img
                           className="mp_img"
                           src={require("../assets/img/prdt1.png")}
@@ -180,7 +185,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>

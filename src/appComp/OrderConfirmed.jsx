@@ -1,9 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OrderConfirmed = () => {
   const navigate = useNavigate();
+  let location = useLocation();
+  let details = location?.state;
 
+  console.log(details);
   return (
     <div>
       <div className="app_main">
@@ -34,57 +37,37 @@ const OrderConfirmed = () => {
             <div className="col-12 orderconfirmed_content text-center py-4">
               <h2>Payment Succesfully</h2>
               <p>
-                Total Amount paid by Mastercard, Please help us with our product
+                Total Amount is Successfull, Please help us with our product
                 reviews.
               </p>
             </div>
             <div className="col-12">
               <div className="row cart_product">
                 <div className="col-12">
-                  <div className="row Breakfast_single align-items-center position-relative">
-                    <div className="col">
-                      <div className="menu_card_data">
-                        <h2>McFlurry (Oreo)®</h2>
-                        <span>7.89 EGP</span>
+                  {details?.cuisines?.map((item, ind) => (
+                    <div className="row Breakfast_single align-items-center position-relative">
+                      <div className="col">
+                        <div className="menu_card_data">
+                          <h2>{item?.cuisineId?.name}</h2>
+                          <span>EGP {item?.cuisineId?.price}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-auto ">
-                      <div className="menu_product position-relative">
-                        <img
-                          className="mp_img"
-                          src="assets/img/prdt1.png"
-                          alt=""
-                        />
+                      <div className="col-auto ">
+                        <div className="menu_product position-relative">
+                          <img
+                            className="mp_img"
+                            src={require("../assets/img/prdt2.png")}
+                            alt=""
+                          />
+                        </div>
                       </div>
+                      {/* <div class="col-auto ps-0">
+                          <a class="product_remove" href="javascript:;">
+                             <img src="assets/img/close-line.png" alt="">
+                          </a>
+                       </div> */}
                     </div>
-                    {/* <div class="col-auto ps-0">
-                        <a class="product_remove" href="javascript:;">
-                           <img src="assets/img/close-line.png" alt="">
-                        </a>
-                     </div> */}
-                  </div>
-                  <div className="row Breakfast_single align-items-center">
-                    <div className="col">
-                      <div className="menu_card_data">
-                        <h2>McFlurry (Oreo)®</h2>
-                        <span>7.89 EGP</span>
-                      </div>
-                    </div>
-                    <div className="col-auto ">
-                      <div className="menu_product position-relative">
-                        <img
-                          className="mp_img"
-                          src={require("../assets/img/prdt1.png")}
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    {/* <div class="col-auto ps-0">
-                        <a class="product_remove" href="javascript:;">
-                           <img src="assets/img/close-line.png" alt="">
-                        </a>
-                     </div> */}
-                  </div>
+                  ))}
                 </div>
               </div>
               <div className="row summary_part py-2">
@@ -94,7 +77,9 @@ const OrderConfirmed = () => {
                       <div className="summary_text">Order Id</div>
                     </div>
                     <div className="col-6">
-                      <div className="summary_text text-end">#234234</div>
+                      <div className="summary_text text-end">
+                        {details?.orderId}
+                      </div>
                     </div>
                   </div>
                   <div className="row py-1">
@@ -137,7 +122,7 @@ const OrderConfirmed = () => {
                   <img src="assets/img/money.png" alt="" />
                   Your Payable Amount
                 </h2>
-                <strong>EGP 25.35</strong>
+                <strong>EGP {details?.total}</strong>
               </div>
             </div>
 

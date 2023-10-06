@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCousinesDetails } from "./httpServices/appApis";
+import { AddInCart, getCousinesDetails } from "./httpServices/appApis";
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [cousine, setCousine] = useState([]);
-  const [items, setItems] = useState([]);
 
-  let cartItem = localStorage.getItem("cart");
+  let tableId = localStorage.getItem("tableId");
+
   useEffect(() => {
     GetCuisinesInfo();
-    setItems(cartItem);
   }, []);
+
   const GetCuisinesInfo = async () => {
     const { data } = await getCousinesDetails(id);
     if (!data?.error) {
       setCousine(data?.results?.cuisine);
-      setItems([...items, data.results.cuisine]);
     }
   };
 
   const addToCart = async () => {
-    localStorage.setItem("cart", JSON.stringify(items));
+    const { data } = await AddInCart({
+      tableId: tableId,
+      cuisineId: id,
+      quantity: 1,
+      price: 3.4,
+    });
+    if (!data.error) {
+      navigate("/app/home/cart");
+    }
   };
 
   return (
@@ -239,7 +246,6 @@ const AddProduct = () => {
         <a
           className="view_cart_btn row text-center text-decoration-none"
           onClick={() => {
-            navigate("/app/home/cart");
             addToCart();
           }}>
           <div className="col-2">
