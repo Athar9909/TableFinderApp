@@ -87,7 +87,10 @@ const OrderConfirmed = () => {
                       <div className="summary_text">Table Id</div>
                     </div>
                     <div className="col-6">
-                      <div className="summary_text text-end"> {details?.tableId}</div>
+                      <div className="summary_text text-end">
+                        {" "}
+                        {details?.tableId?.name}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -130,7 +133,9 @@ const OrderConfirmed = () => {
               <a
                 className="comman_btn w-100 text-decoration-none"
                 onClick={() => {
-                  navigate("/app/home/rate-order");
+                  navigate("/app/home/rate-order", {
+                    state: details,
+                  });
                 }}>
                 Rate The Order
               </a>
