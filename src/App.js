@@ -1,6 +1,7 @@
 import AddCard from "./appComp/AddCard";
 import AddProduct from "./appComp/AddProduct";
 import Cart from "./appComp/Cart";
+import FailedPayment from "./appComp/FailedPayment";
 import OrderConfirmed from "./appComp/OrderConfirmed";
 import Payment from "./appComp/Payment";
 import RateOrder from "./appComp/RateOrder";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/app/home/payment-method" element={<Payment />} />
         <Route path="/app/home/payment-method/Add-card" element={<AddCard />} />
         <Route path="/app/home/order-Confirmed" element={<OrderConfirmed />} />
+        <Route path="/app/home/payment-failed" element={<FailedPayment />} />
         <Route path="/app/home/rate-order" element={<RateOrder />} />
       </Routes>
     </BrowserRouter>

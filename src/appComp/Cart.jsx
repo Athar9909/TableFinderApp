@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckoutItems, getCartDetails } from "./httpServices/appApis";
+import {
+  CheckoutItems,
+  PaymentStart,
+  getCartDetails,
+} from "./httpServices/appApis";
 
 const Cart = () => {
   const [orderType, setOrderType] = useState(true);
@@ -26,9 +30,14 @@ const Cart = () => {
       type: orderType ? "Take Away" : "Dining",
       total: 3.4,
     };
-    navigate("/app/home/payment-method", {
-      state: Data,
+    const { data } = await PaymentStart({
+      price: Math.round(cart?.total * 100),
     });
+    if (!data?.error) {
+      localStorage.setItem("paymentId", data?.results?.id);
+      window.location.href = data?.results?.url;
+      // navigate();
+    }
   };
 
   return (
