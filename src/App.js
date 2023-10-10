@@ -5,6 +5,8 @@ import FailedPayment from "./appComp/FailedPayment";
 import OrderConfirmed from "./appComp/OrderConfirmed";
 import Payment from "./appComp/Payment";
 import RateOrder from "./appComp/RateOrder";
+import Waiting from "./appComp/Waiting";
+import WaitingSuccess from "./appComp/WaitingSuccess";
 import Home from "./appComp/home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -20,6 +22,8 @@ function App() {
         <Route path="/app/home/order-Confirmed" element={<OrderConfirmed />} />
         <Route path="/app/home/payment-failed" element={<FailedPayment />} />
         <Route path="/app/home/rate-order" element={<RateOrder />} />
+        <Route path="/waitList/:id" element={<Waiting />} />
+        <Route path="/waitList/success" element={<WaitingSuccess />} />
       </Routes>
     </BrowserRouter>
   );

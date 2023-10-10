@@ -31,7 +31,7 @@ const Cart = () => {
       total: 3.4,
     };
     const { data } = await PaymentStart({
-      price: Math.round(cart?.total * 100),
+      price: cart?.total,
     });
     if (!data?.error) {
       localStorage.setItem("paymentId", data?.results?.id);
