@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { CheckoutItems } from "./httpServices/appApis";
+import Swal from "sweetalert2";
 
 const OrderConfirmed = () => {
   const navigate = useNavigate();
   let location = useLocation();
-  let details = location?.state;
+  const [details, setDetails] = useState();
 
   console.log(details);
+
+  useEffect(() => {
+    checkOut();
+  }, []);
+  let dataOr = localStorage.getItem("Data");
+  const checkOut = async () => {
+    const { data } = await CheckoutItems({
+      dataOr,
+    });
+    if (!data?.error) {
+      setDetails(data?.results?.order);
+    }
+  };
   return (
     <div>
       <div className="app_main">

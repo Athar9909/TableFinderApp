@@ -21,9 +21,9 @@ const Waiting = () => {
       phone_number: data?.number,
       country_code: "966",
       branchId: id,
+      number_of_people: data?.noPeople,
     });
     console.log(res);
-
     if (!res?.data.error) {
       Swal.fire({
         title: res?.data?.message,
@@ -31,7 +31,7 @@ const Waiting = () => {
         confirmButtonText: "Okay",
         confirmButtonColor: "#e25829",
       });
-      navigate("waitList/success");
+      navigate("/waitList/success");
     }
   };
 
