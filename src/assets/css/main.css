@@ -1,5 +1,10 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Young+Serif&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Young+Serif&display=swap"); */
+@import url('https://fonts.googleapis.com/css2?family=Gabarito&display=swap');
 body {
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Mochiy Pop One", sans-serif !important; */
+  /* font-family: "Young Serif", serif; */
+  font-family: 'Gabarito', sans-serif !important;
   overflow-x: hidden;
   display: none;
 }
@@ -825,10 +830,10 @@ a {
   .Breakfast_menu_card {
     padding: 0 15px;
   }
-  .twooptions_btns .comman_btn {
+  .twooptions_btns .comman_btn {  
     display: inline-flex;
     padding: 10px 10px;
-    width: 120px;
+    width: 120px; 
     font-size: 14px;
     margin: 0;
     background-color: #ff7a00 !important;
@@ -836,7 +841,7 @@ a {
     border: 1px solid #ff7a00 !important;
   }
   .twooptions_btns .comman_btn:last-child {
-    border-radius: 0 20px 20px 0;
+    border-radius: 0 20px 20px 0 !important;
   }
   .twooptions_btns .comman_btn:hover,
   .twooptions_btns .comman_btn.active {
@@ -1028,9 +1033,8 @@ a {
   }
 }
 
-
-.cart_logo{
-  position:relative;
+.cart_logo {
+  position: relative;
   top: -188px !important;
   left: 85%;
   background-color: #fff;

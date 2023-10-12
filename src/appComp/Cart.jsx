@@ -38,7 +38,7 @@ const Cart = () => {
       cuisineId: cId,
     });
     if (!data?.error) {
-      getCartDetails();
+      GetCart();
     }
   };
 
@@ -101,22 +101,6 @@ const Cart = () => {
     );
   };
 
-  const handleQuantity = (value) => {
-    let data = cart?.map((item, index) => {
-      return {
-        ...item,
-        cuisines: item.cuisines?.map((val, ind) => {
-          return {
-            ...val,
-            quantity: val?.quantity === value,
-          };
-        }),
-      };
-    });
-    setCart(data);
-    console.log(value);
-  };
-
   return (
     <div>
       {NewCart?.length > 0 ? (
@@ -146,7 +130,7 @@ const Cart = () => {
                     {NewCart?.map((itm, ind) => (
                       <div className="row Breakfast_single align-items-center">
                         <div className="col">
-                          <div className="menu_card_data">
+                          <div className="menu_card_data fs-4">
                             <h2>{itm?.cuisineId?.name}</h2>
                             <span>
                               EGP {itm?.cuisineId?.price * itm?.quantity}
@@ -175,10 +159,20 @@ const Cart = () => {
                           <div className="menu_product position-relative">
                             <img
                               className="mp_img"
-                              src={require("../assets/img/prdt1.png")}
+                              src={
+                                itm?.cuisineId?.image
+                                  ? itm?.cuisineId?.image
+                                  : require("../assets/img/prdt1.png")
+                              }
                               alt=""
                             />
-                            <a className="add_product shadow">
+                            <a
+                              className="add_product shadow"
+                              onClick={() => {
+                                navigate(
+                                  `/app/home/add-product/${itm?.cuisineId?._id}`
+                                );
+                              }}>
                               <img
                                 src={require("../assets/img/pencil-fill.png")}
                                 alt=""
@@ -345,10 +339,20 @@ const Cart = () => {
                           <div className="menu_product position-relative">
                             <img
                               className="mp_img"
-                              src={require("../assets/img/prdt1.png")}
+                              src={
+                                itm?.cuisineId.image
+                                  ? itm?.cuisineId?.image
+                                  : require("../assets/img/prdt1.png")
+                              }
                               alt=""
                             />
-                            <a className="add_product shadow">
+                            <a
+                              className="add_product shadow"
+                              onClick={() => {
+                                navigate(
+                                  `/app/home/add-product/${itm?.cuisineId?._id}`
+                                );
+                              }}>
                               <img
                                 src={require("../assets/img/pencil-fill.png")}
                                 alt=""

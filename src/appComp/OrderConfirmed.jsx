@@ -13,7 +13,9 @@ const OrderConfirmed = () => {
   useEffect(() => {
     checkOut();
   }, []);
-  let dataOr = JSON.parse(localStorage.getItem("checkOut"));
+  let dataOr = JSON.parse(localStorage.getItem("checkOut"))
+    ? JSON.parse(localStorage.getItem("checkOut"))
+    : {};
   const checkOut = async () => {
     const { data } = await CheckoutItems(dataOr);
     if (!data?.error) {
@@ -119,7 +121,9 @@ const OrderConfirmed = () => {
                       <div className="summary_text">Paid Amount</div>
                     </div>
                     <div className="col-6">
-                      <div className="summary_text text-end">EGP {details?.total}</div>
+                      <div className="summary_text text-end">
+                        EGP {details?.total}
+                      </div>
                     </div>
                   </div>
                 </div>
