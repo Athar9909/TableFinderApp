@@ -10,6 +10,7 @@ const Home = () => {
   const [cate, setCate] = useState([]);
   const [cateId, setCateId] = useState();
   const [cousine, setCousine] = useState([]);
+  const [info, setInfo] = useState(false);
   useEffect(() => {
     GetTableInfo();
     GetCuisines();
@@ -68,6 +69,11 @@ const Home = () => {
           </span>
           <div className="app_menus_logo shadow">
             <img
+            style={{
+              width:"100%",
+              borderRadius:"50%",
+              height:"80%"
+            }}
               src={
                 table?.restaurantId?.restaurant_logo
                   ? table?.restaurantId?.restaurant_logo
@@ -96,9 +102,20 @@ const Home = () => {
                   </span>
                 </div>
               </div>
+
+              {info && (
+                <div className="opennow_box mt-2">
+                  <a>Info:</a>{" "}
+                  <span>{table?.restaurantId?.restaurant_description}</span>
+                </div>
+              )}
             </div>
             <div className="col-auto">
-              <a className="information_btn shadow">
+              <a
+                className="information_btn shadow"
+                onClick={() => {
+                  setInfo(!info);
+                }}>
                 <img src={require("../assets/img/infobtn.png")} alt="" />
               </a>
             </div>

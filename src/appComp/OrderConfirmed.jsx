@@ -64,7 +64,7 @@ const OrderConfirmed = () => {
                       <div className="col">
                         <div className="menu_card_data">
                           <h2>{item?.cuisineId?.name}</h2>
-                          <span>EGP {item?.cuisineId?.price}</span>
+                          <span>EGP {item?.cuisineId?.price} X {item?.quantity}qty</span>
                         </div>
                       </div>
                       <div className="col-auto ">
