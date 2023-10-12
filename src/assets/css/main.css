@@ -1028,3 +1028,11 @@ a {
   }
 }
 
+
+.cart_logo{
+  position:relative;
+  top: -188px !important;
+  left: 85%;
+  background-color: #fff;
+  z-index: 9999 !important;
+}

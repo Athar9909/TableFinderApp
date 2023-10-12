@@ -317,7 +317,7 @@ export async function JoinWaiting(formData) {
 export async function deleteCartItem(formData) {
   try {
     const { data } = await appHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/zitex/removeFromCart`,
+      `${process.env.REACT_APP_APIENDPOINT}api/zitex/removeFromCart`,
       formData
     );
     console.log(data);

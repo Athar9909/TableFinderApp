@@ -47,11 +47,34 @@ const Home = () => {
         <div className="app_menus_top">
           <img
             className="bg_imgg"
-            src={require("../assets/img/bg_img.jpg")}
-            alt=""
-          />
+            src={
+              table?.restaurantId?.cover_image
+                ? table?.restaurantId?.cover_image
+                : require("../assets/img/bg_img.jpg")
+            }
+            alt=""></img>
+          <span
+            className=""
+            onClick={() => {
+              navigate("/app/home/cart");
+            }}>
+            <a className="information_btn cart_logo shadow">
+              <i
+                style={{
+                  color: "#e25829",
+                }}
+                class="fa-solid fa-cart-shopping"></i>
+            </a>
+          </span>
           <div className="app_menus_logo shadow">
-            <img src={require("../assets/img/logo.png")} alt="" />
+            <img
+              src={
+                table?.restaurantId?.restaurant_logo
+                  ? table?.restaurantId?.restaurant_logo
+                  : require("../assets/img/logo.png")
+              }
+              alt=""
+            />
           </div>
         </div>
 
@@ -170,11 +193,7 @@ const Home = () => {
                         onClick={() => {
                           navigate(`/app/home/add-product/${itm?._id}`);
                         }}>
-                        <img
-                          className="mp_img"
-                          src={require("../assets/img/prdt1.png")}
-                          alt=""
-                        />
+                        <img className="mp_img" src={itm?.image} alt="" />
                         <a className="add_product shadow">
                           <img src={require("../assets/img/plus.png")} alt="" />
                         </a>

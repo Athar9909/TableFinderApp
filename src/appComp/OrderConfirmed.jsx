@@ -13,7 +13,7 @@ const OrderConfirmed = () => {
   useEffect(() => {
     checkOut();
   }, []);
-  let dataOr = localStorage.getItem("Data");
+  let dataOr = localStorage.getItem("checkOut");
   const checkOut = async () => {
     const { data } = await CheckoutItems({
       dataOr,
