@@ -64,12 +64,12 @@ const RateOrder = () => {
               <div className="rating_top">
                 <h2>
                   <img src="assets/img/money.png" alt="" />
-                  Your Payable Amount
+                  Your Order Amount
                 </h2>
-                <strong>EGP 25.35</strong>
+                <strong>EGP {details?.total}</strong>
               </div>
             </div>
-          </div>
+          </div>  
           <div className="row rating_screen_main">
             <div className="col-12 mb-5">
               <div className="rate_your_exprience">

@@ -13,11 +13,9 @@ const OrderConfirmed = () => {
   useEffect(() => {
     checkOut();
   }, []);
-  let dataOr = localStorage.getItem("checkOut");
+  let dataOr = JSON.parse(localStorage.getItem("checkOut"));
   const checkOut = async () => {
-    const { data } = await CheckoutItems({
-      dataOr,
-    });
+    const { data } = await CheckoutItems(dataOr);
     if (!data?.error) {
       setDetails(data?.results?.order);
     }
@@ -71,7 +69,11 @@ const OrderConfirmed = () => {
                         <div className="menu_product position-relative">
                           <img
                             className="mp_img"
-                            src={require("../assets/img/prdt2.png")}
+                            src={
+                              item?.cuisineId?.image
+                                ? item?.cuisineId?.image
+                                : require("../assets/img/prdt2.png")
+                            }
                             alt=""
                           />
                         </div>
@@ -110,41 +112,21 @@ const OrderConfirmed = () => {
                   </div>
                 </div>
               </div>
-              <div className="row summary_part py-2">
-                <div className="col-12">
+              <div className="row summary_part py-2 mb-5">
+                <div className="col-12 mb-4">
                   <div className="row py-1">
                     <div className="col-6">
-                      <div className="summary_text">Subtotal</div>
+                      <div className="summary_text">Paid Amount</div>
                     </div>
                     <div className="col-6">
-                      <div className="summary_text text-end">EGP 11.15</div>
-                    </div>
-                  </div>
-                  <div className="row py-1">
-                    <div className="col-6">
-                      <div className="summary_text">
-                        Fees &amp; Estimated Tax
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="summary_text text-end">EGP 3.99</div>
+                      <div className="summary_text text-end">EGP {details?.total}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-12 rating_screen_inner rate_screen_new m-0 mb-5">
-              <div className="rating_top py-0">
-                <h2>
-                  <img src="assets/img/money.png" alt="" />
-                  Your Payable Amount
-                </h2>
-                <strong>EGP {details?.total}</strong>
-              </div>
-            </div>
-
-            <div className="col-12 mb-3 rate_theorder">
+            <div className="col-12 mb-3 mt-5 rate_theorder">
               <a
                 className="comman_btn w-100 text-decoration-none"
                 onClick={() => {

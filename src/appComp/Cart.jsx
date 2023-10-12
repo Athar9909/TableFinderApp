@@ -55,7 +55,7 @@ const Cart = () => {
         total: total,
         id: data?.results?.id,
       };
-      localStorage.setItem("checkOut", Data);
+      localStorage.setItem("checkOut", JSON.stringify(Data));
       window.location.href = data?.results?.url;
       // navigate();
     }
