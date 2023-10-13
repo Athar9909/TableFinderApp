@@ -6,7 +6,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [cousine, setCousine] = useState([]);
-
+  const [selected, setSelected] = useState([]);
   let tableId = localStorage.getItem("tableId");
 
   useEffect(() => {
@@ -26,12 +26,14 @@ const AddProduct = () => {
       cuisineId: id,
       quantity: 1,
       price: 3.4,
+      addOns: [],
     });
     if (!data.error) {
       navigate("/app/home/cart");
     }
   };
 
+  console.log(selected);
   return (
     <div className="app_main">
       <div className="add_product_screen overflow-hidden">
@@ -55,8 +57,8 @@ const AddProduct = () => {
             <img
               src={
                 cousine?.image
-                  // ? cousine?.image
-                  // : require("../assets/img/product_img.png")
+                // ? cousine?.image
+                // : require("../assets/img/product_img.png")
               }
               alt=""
             />
@@ -85,6 +87,12 @@ const AddProduct = () => {
                                 id={i?._id}
                                 name={itm?.name}
                                 className="d-none"
+                                onClick={() =>
+                                  setSelected([
+                                    ...selected,
+                                    { addOnId: itm?._id, option: i?._id },
+                                  ])
+                                }
                               />
                               <label htmlFor={i?._id}>{i?.name}</label>
                             </div>
