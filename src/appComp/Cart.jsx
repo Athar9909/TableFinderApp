@@ -155,6 +155,7 @@ const Cart = () => {
                             </span>
                           </div>
                         </div>
+
                         <div className="col-auto">
                           <div className="menu_product position-relative">
                             <img
@@ -188,6 +189,18 @@ const Cart = () => {
                                 removeItem(itm?.cuisineId?._id);
                               }}></i>
                           </div>
+                        </div>
+                        <div className="col-12">
+                          <span className="d-flex">
+                            {itm?.addOns?.map((itm) => (
+                              <h5
+                                style={{
+                                  fontSize: "10px",
+                                }}>
+                                {itm?.addOnId?.name + "-" + itm?.option?.name},
+                              </h5>
+                            ))}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -368,6 +381,18 @@ const Cart = () => {
                                 removeItem(itm?.cuisineId?._id);
                               }}></i>
                           </div>
+                        </div>
+                        <div className="col-12">
+                          <span className="d-flex">
+                            {itm?.addOns?.map((itm) => (
+                              <h5
+                                style={{
+                                  fontSize: "10px",
+                                }}>
+                                {itm?.addOnId?.name + "-" + itm?.option?.name},
+                              </h5>
+                            ))}
+                          </span>
                         </div>
                       </div>
                     ))}

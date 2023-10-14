@@ -20,13 +20,33 @@ const AddProduct = () => {
     }
   };
 
+  const addOnSelector = (addOnId, itemId) => {
+    // if(addOnId)
+    // setSelected([...selected, { addOnId: addOnId, option: itemId }]);
+    let addOn = { ...cousine };
+
+    addOn?.addOns?.map((itm, id) => {
+      if (addOnId === itm?._id) {
+        itm.optionId = itemId;
+      }
+    });
+    console.log(addOn, "kjjk");
+    setCousine(addOn);
+  };
+
   const addToCart = async () => {
+    let AddON = [];
+    cousine?.addOns?.map((itm, id) => {
+      if (itm?.optionId) {
+        AddON.push({ addOnId: itm?._id, option: itm?.optionId });
+      }
+    });
     const { data } = await AddInCart({
       tableId: tableId,
       cuisineId: id,
       quantity: 1,
       price: 3.4,
-      addOns: [],
+      addOns: AddON,
     });
     if (!data.error) {
       navigate("/app/home/cart");
@@ -87,12 +107,9 @@ const AddProduct = () => {
                                 id={i?._id}
                                 name={itm?.name}
                                 className="d-none"
-                                onClick={() =>
-                                  setSelected([
-                                    ...selected,
-                                    { addOnId: itm?._id, option: i?._id },
-                                  ])
-                                }
+                                onClick={() => {
+                                  addOnSelector(itm?._id, i?._id);
+                                }}
                               />
                               <label htmlFor={i?._id}>{i?.name}</label>
                             </div>

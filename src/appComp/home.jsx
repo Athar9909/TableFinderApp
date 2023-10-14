@@ -69,15 +69,15 @@ const Home = () => {
           </span>
           <div className="app_menus_logo shadow">
             <img
-            style={{
-              width:"100%",
-              borderRadius:"50%",
-              height:"80%"
-            }}
+              style={{
+                width: "100%",
+                borderRadius: "50%",
+                height: "80%",
+              }}
               src={
                 table?.restaurantId?.restaurant_logo
                   ? table?.restaurantId?.restaurant_logo
-                  : require("../assets/img/logo.png")
+                  : require("../assets/img/logoNN.png")
               }
               alt=""
             />
@@ -123,52 +123,23 @@ const Home = () => {
         </div>
         <div className="app_slider comman_space">
           <Carousel autoplay>
-            <div>
-              <div
-                className="app_slidee"
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}>
-                <h3>
-                  Get EGP0 Delivery fee on your <br />
-                  first order over EGP10
-                </h3>
-                <a>Learn More</a>
+            {table?.restaurantId?.banners?.map((item, ind) => (
+              <div>
+                <div
+                  className="app_slidee"
+                  style={{
+                    backgroundImage: `url(${item})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}>
+                  <h3>
+                    Get EGP0 Delivery fee on your <br />
+                    first order over EGP10
+                  </h3>
+                  <a>Learn More</a>
+                </div>
               </div>
-            </div>
-
-            <div>
-              <div
-                className="app_slidee"
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}>
-                <h3>
-                  Get EGP0 Delivery fee on your <br />
-                  first order over EGP10
-                </h3>
-                <a>Learn More</a>
-              </div>
-            </div>
-            <div>
-              <div
-                className="app_slidee"
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}>
-                <h3>
-                  Get EGP0 Delivery fee on your <br />
-                  first order over EGP10
-                </h3>
-                <a>Learn More</a>
-              </div>
-            </div>
+            ))}
           </Carousel>
         </div>
         <div className="Breakfast_menu comman_space mt-3 p-0">
@@ -189,7 +160,7 @@ const Home = () => {
             ))}
           </ul>
 
-          <div className="tab-content" id="myTabContent">
+          <div className="tab-content shadow" id="myTabContent">
             <div className="tab-pane fade show active">
               <div className="Breakfast_menu_card">
                 {cousine?.map((itm, ind) => (
@@ -218,6 +189,31 @@ const Home = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="tab-content text-center p-2 py-3 mt-2"
+            id="myTabContent">
+            <div className="tab-pane fade show active">
+              <div className="Breakfast_menu_card">
+                <div>
+                  <h3
+                    style={{
+                      fontSize: "15px",
+                    }}>
+                    Powered by{" "}
+                    <img
+                      className=""
+                      style={{
+                        borderRadius: "50%",
+                      }}
+                      width={20}
+                      src={require("../assets/img/logoNN.png")}></img>{" "}
+                    Table Finder
+                  </h3>
+                </div>
               </div>
             </div>
           </div>

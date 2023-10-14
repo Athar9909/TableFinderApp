@@ -1,13 +1,17 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { JoinWaiting } from "./httpServices/appApis";
-import Swal from "sweetalert2";
-import classNames from "classnames";
-
+import { Col, Row, Statistic } from "antd";
+const { Countdown } = Statistic;
 const WaitingSuccess = () => {
   const navigate = useNavigate();
+  const [status, setStatus] = useState(false);
+  const deadline = Date.now() + 1000 * 60 * 60 * 2;
 
+  const onFinish = () => {
+    console.log("finished!");
+    setStatus(false);
+  };
   return (
     <div>
       <div className="app_main">
@@ -37,6 +41,18 @@ const WaitingSuccess = () => {
             </div>
             <div className="col-12 orderconfirmed_content text-center py-4">
               <h2>You are in WaitList</h2>
+            </div>
+            <div className="col-12 orderconfirmed_content text-center py-4">
+              {status ? (
+                <div>
+                  <label>Thanks for your patience:Only Time Left</label>
+                  <Countdown value={deadline} onFinish={onFinish} />  
+                </div>
+              ) : (
+                <button className="comman_btn" onClick={() => setStatus(true)}>
+                  Click to Check Status
+                </button>
+              )}
             </div>
           </div>
         </div>
