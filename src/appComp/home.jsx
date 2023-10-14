@@ -128,7 +128,7 @@ const Home = () => {
                 <div
                   className="app_slidee"
                   style={{
-                    backgroundImage: `url(${item})`,
+                    backgroundImage: `url(${item ? item : image})`,
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                   }}>
