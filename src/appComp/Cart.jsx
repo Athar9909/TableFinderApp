@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  AddInCart,
   CheckoutItems,
   PaymentStart,
   deleteCartItem,
@@ -14,32 +15,47 @@ const Cart = () => {
   const [NewCart, setNewCart] = useState([]);
   let id = localStorage.getItem("tableId");
   const [total, setTotal] = useState([]);
+  const [totalAddon, setTotalAddon] = useState([]);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
     GetCart();
   }, []);
+  let tableId = localStorage.getItem("tableId");
 
   const GetCart = async () => {
     const { data } = await getCartDetails(id);
     if (!data?.error) {
       let cus = data?.results?.cart?.cuisines;
       setCart(data?.results?.cart);
-      setNewCart(data?.results?.cart?.cuisines);
-      setTotal(
-        cus?.reduce(function (a, b) {
-          return a + b.cuisineId?.price * b.quantity;
-        }, 0)
-      );
+      setLoader(false);
+      // setNewCart(data?.results?.cart?.cuisines);
+      // let ItemTotal = cus?.reduce(function (a, b) {
+      //   return a + b.cuisineId?.price * b.quantity;
+      // }, 0);
+      // setTotal(
+      //   cus?.reduce(function (a, b) {
+      //     return a + b.cuisineId?.price * b.quantity;
+      //   }, 0)
+      // );
+      // setTotalAddon(data?.results?.cart.total - ItemTotal);
     }
   };
 
-  const removeItem = async (cId) => {
+  console.log(totalAddon, "adddon");
+
+  const removeItem = async (cId, qty) => {
+    setLoader(true);
     const { data } = await deleteCartItem({
       tableId: id,
       cuisineId: cId,
+      quantity: qty,
     });
     if (!data?.error) {
       GetCart();
     }
+    setTimeout(() => {
+      setLoader(false);
+    }, [4000]);
   };
 
   const Checkout = async () => {
@@ -61,52 +77,74 @@ const Cart = () => {
     }
   };
 
-  const handleQuantityMinus = (ind) => {
-    let data = NewCart?.map((item, index) => {
-      if (ind === index) {
-        return {
-          ...item,
-          quantity: item?.quantity - (item?.quantity > 1 ? 1 : 0),
-        };
-      } else {
-        return item;
+  const handleQuantityMinus = async (cId, qty) => {
+    setLoader(true);
+    let AddON = [];
+    cart?.cuisines?.addOns?.map((itm, id) => {
+      if (itm?.optionId) {
+        AddON.push({ addOnId: itm?._id, option: itm?.optionId });
       }
     });
-    setNewCart(data);
-    setTotal(
-      data.reduce(function (a, b) {
-        return a + b.cuisineId?.price * b.quantity;
-      }, 0)
-    );
+    const { data } = await deleteCartItem({
+      tableId: tableId,
+      cuisineId: cId,
+      quantity: qty,
+    });
+    if (!data.error) {
+      GetCart();
+    }
+    setTimeout(() => {
+      setLoader(false);
+    }, [4000]);
+    // let data = NewCart?.map((item, index) => {
+    //   if (ind === index) {
+    //     return {
+    //       ...item,
+    //       quantity: item?.quantity - (item?.quantity > 1 ? 1 : 0),
+    //     };
+    //   } else {
+    //     return item;
+    //   }
+    // });
+    // setNewCart(data);
+    // setTotal(
+    //   data.reduce(function (a, b) {
+    //     return a + b.cuisineId?.price * b.quantity;
+    //   }, 0)
+    // );
   };
   console.log(total);
 
-  const handleQuantityPlus = (ind) => {
-    let data = NewCart.map((item, index) => {
-      if (ind === index) {
-        return {
-          ...item,
-          quantity: +item?.quantity + 1,
-        };
-      } else {
-        return item;
+  const handleQuantityPlus = async (cId, price) => {
+    setLoader(true);
+    let AddON = [];
+    cart?.cuisines?.addOns?.map((itm, id) => {
+      if (itm?.optionId) {
+        AddON.push({ addOnId: itm?._id, option: itm?.optionId });
       }
     });
-    console.log(data);
-    setNewCart(data);
-    setTotal(
-      data.reduce(function (a, b) {
-        return a + b.cuisineId?.price * b.quantity;
-      }, 0)
-    );
+    const { data } = await AddInCart({
+      tableId: tableId,
+      cuisineId: cId,
+      quantity: 1,
+      price: price,
+      addOns: AddON,
+    });
+    if (!data.error) {
+      GetCart();
+    }
+    setTimeout(() => {
+      setLoader(false);
+    }, [4000]);
   };
 
   return (
     <div>
-      {NewCart?.length > 0 ? (
+      {cart?.cuisines?.length > 0 ? (
         <>
           {orderType ? (
             <div className="app_main">
+              {loader && <div class="loading">Loading&#8230;</div>}
               <div className="cart_screen comman_space overflow-hidden">
                 <div className="row top_bar pb-3 align-items-center">
                   <div className="col-2">
@@ -127,19 +165,20 @@ const Cart = () => {
                 </div>
                 <div className="row cart_product">
                   <div className="col-12">
-                    {NewCart?.map((itm, ind) => (
+                    {cart?.cuisines?.map((itm, ind) => (
                       <div className="row Breakfast_single align-items-center">
                         <div className="col">
                           <div className="menu_card_data fs-4">
                             <h2>{itm?.cuisineId?.name}</h2>
-                            <span>
-                              EGP {itm?.cuisineId?.price * itm?.quantity}
-                            </span>
+                            <span>EGP {itm?.total}</span>
                           </div>
                         </div>
                         <div className="px-0 col-auto">
                           <div className="quantity_box" key={NewCart}>
-                            <span onClick={() => handleQuantityMinus(ind)}>
+                            <span
+                              onClick={() =>
+                                handleQuantityMinus(itm?.cuisineId?._id, 1)
+                              }>
                               -
                             </span>
                             <button className="bg-white border rounded m-2">
@@ -150,7 +189,13 @@ const Cart = () => {
                           defaultValue={itm?.quantity}
                           type="text"
                         /> */}
-                            <span onClick={() => handleQuantityPlus(ind)}>
+                            <span
+                              onClick={() =>
+                                handleQuantityPlus(
+                                  itm?.cuisineId?._id,
+                                  itm?.price
+                                )
+                              }>
                               +
                             </span>
                           </div>
@@ -186,7 +231,7 @@ const Cart = () => {
                             <i
                               className="fa fa-trash"
                               onClick={() => {
-                                removeItem(itm?.cuisineId?._id);
+                                removeItem(itm?.cuisineId?._id, itm?.quantity);
                               }}></i>
                           </div>
                         </div>
@@ -255,10 +300,22 @@ const Cart = () => {
                         <div className="summary_text">Subtotal</div>
                       </div>
                       <div className="col-6">
-                        <div className="summary_text text-end">EGP {total}</div>
+                        <div className="summary_text text-end">
+                          EGP {cart?.total}
+                        </div>
                       </div>
                     </div>
                   </div>
+                  {/* <div className="col-12">
+                    <div className="row py-1">
+                      <div className="col-6">
+                        <div className="summary_text">Add Ons Total</div>
+                      </div>
+                      <div className="col-6">
+                        <div className="summary_text text-end">EGP {cart?.total}</div>
+                      </div>
+                    </div>
+                  </div> */}
                 </div>
                 <div className="row summary_total">
                   <div className="col-12 pb-3">
@@ -267,7 +324,10 @@ const Cart = () => {
                         <div className="total_count">Total</div>
                       </div>
                       <div className="col-6">
-                        <div className="total_count text-end"> EGP {total}</div>
+                        <div className="total_count text-end">
+                          {" "}
+                          EGP {cart?.total}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -301,6 +361,7 @@ const Cart = () => {
             </div>
           ) : (
             <div className="app_main">
+              {loader && <div class="loading">Loading&#8230;</div>}
               <div className="checkout comman_space overflow-hidden">
                 <div className="row top_bar py-3 align-items-center">
                   <div className="col-2">
@@ -320,19 +381,20 @@ const Cart = () => {
                 </div>
                 <div className="row cart_product">
                   <div className="col-12">
-                    {NewCart?.map((itm, ind) => (
+                    {cart?.cuisines?.map((itm, ind) => (
                       <div className="row Breakfast_single align-items-center">
                         <div className="col">
-                          <div className="menu_card_data">
+                          <div className="menu_card_data fs-4">
                             <h2>{itm?.cuisineId?.name}</h2>
-                            <span>
-                              EGP {itm?.cuisineId?.price * itm?.quantity}
-                            </span>
+                            <span>EGP {itm?.total}</span>
                           </div>
                         </div>
                         <div className="px-0 col-auto">
                           <div className="quantity_box" key={NewCart}>
-                            <span onClick={() => handleQuantityMinus(ind)}>
+                            <span
+                              onClick={() =>
+                                handleQuantityMinus(itm?.cuisineId?._id, 1)
+                              }>
                               -
                             </span>
                             <button className="bg-white border rounded m-2">
@@ -343,17 +405,24 @@ const Cart = () => {
                           defaultValue={itm?.quantity}
                           type="text"
                         /> */}
-                            <span onClick={() => handleQuantityPlus(ind)}>
+                            <span
+                              onClick={() =>
+                                handleQuantityPlus(
+                                  itm?.cuisineId?._id,
+                                  itm?.price
+                                )
+                              }>
                               +
                             </span>
                           </div>
                         </div>
+
                         <div className="col-auto">
                           <div className="menu_product position-relative">
                             <img
                               className="mp_img"
                               src={
-                                itm?.cuisineId.image
+                                itm?.cuisineId?.image
                                   ? itm?.cuisineId?.image
                                   : require("../assets/img/prdt1.png")
                               }
@@ -378,7 +447,7 @@ const Cart = () => {
                             <i
                               className="fa fa-trash"
                               onClick={() => {
-                                removeItem(itm?.cuisineId?._id);
+                                removeItem(itm?.cuisineId?._id, itm?.quantity);
                               }}></i>
                           </div>
                         </div>
@@ -399,6 +468,7 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="main_head my-3">Summary</div>
+
                 <div className="row promo_codepart">
                   <div className="col-12 ">
                     <div className="accordion" id="accordionExample">
@@ -440,6 +510,7 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
+
                 <div className="row summary_part py-2">
                   <div className="col-12">
                     <div className="row py-1">
@@ -447,11 +518,14 @@ const Cart = () => {
                         <div className="summary_text">Subtotal</div>
                       </div>
                       <div className="col-6">
-                        <div className="summary_text text-end">EGP {total}</div>
+                        <div className="summary_text text-end">
+                          EGP {cart?.total}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
                 <div className="row summary_total">
                   <div className="col-12">
                     <div className="row py-3">
@@ -459,11 +533,14 @@ const Cart = () => {
                         <div className="total_count">Total</div>
                       </div>
                       <div className="col-6">
-                        <div className="total_count text-end">EGP {total}</div>
+                        <div className="total_count text-end">
+                          EGP {cart?.total}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
                 <div className="col-12 mb-5 d-flex align-items-center twooptions_btns justify-content-center">
                   <a
                     onClick={() => {

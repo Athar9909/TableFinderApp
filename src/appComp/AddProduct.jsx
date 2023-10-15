@@ -45,7 +45,7 @@ const AddProduct = () => {
       tableId: tableId,
       cuisineId: id,
       quantity: 1,
-      price: 3.4,
+      price: cousine?.price,
       addOns: AddON,
     });
     if (!data.error) {
