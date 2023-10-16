@@ -107,7 +107,7 @@ a {
     border-radius: 6px;
     overflow: hidden;
   }
-  .app_slidee::after {
+  /* .app_slidee::after {
     position: absolute;
     content: "";
     top: 0;
@@ -118,7 +118,7 @@ a {
     background-color: #ff8500;
     clip-path: polygon(0 0, 100% 0, 37% 100%, 0% 100%);
     opacity: 0.9;
-  }
+  } */
   .app_slidee h3 {
     color: #fff;
     z-index: 1;

@@ -131,13 +131,7 @@ const Home = () => {
                     backgroundImage: `url(${item ? item : image})`,
                     backgroundPosition: "center",
                     backgroundSize: "cover",
-                  }}>
-                  <h3>
-                    Get EGP0 Delivery fee on your <br />
-                    first order over EGP10
-                  </h3>
-                  <a>Learn More</a>
-                </div>
+                  }}></div>
               </div>
             ))}
           </Carousel>
