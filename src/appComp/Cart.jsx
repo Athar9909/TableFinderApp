@@ -60,15 +60,15 @@ const Cart = () => {
 
   const Checkout = async () => {
     const { data } = await PaymentStart({
-      price: total,
+      price: cart?.total,
     });
     if (!data?.error) {
       localStorage.setItem("paymentId", data?.results?.id);
       let Data = {
         tableId: id,
-        cuisines: NewCart,
+        cuisines: cart?.cuisines,
         type: orderType ? "Take Away" : "Dining",
-        total: total,
+        total: cart?.total,
         id: data?.results?.id,
       };
       localStorage.setItem("checkOut", JSON.stringify(Data));
