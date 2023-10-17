@@ -1,17 +1,54 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { JoinWaiting } from "./httpServices/appApis";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { JoinWaiting, getWaitingStatus } from "./httpServices/appApis";
 import { Col, Row, Statistic } from "antd";
+import Button from "rsuite/Button";
 const { Countdown } = Statistic;
 const WaitingSuccess = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState(false);
-  const deadline = Date.now() + 1000 * 60 * 60 * 2;
+  const [loader, setLoader] = useState(false);
+  const deadline = Date.now() + 1000 * 60 * 60;
+  const { id } = useParams();
+  const [details, setDetails] = useState([]);
+
+  useEffect(() => {
+    GetStatus();
+  }, []);
+
+  const GetStatus = async () => {
+    const { data } = await getWaitingStatus(id);
+    if (!data?.error) {
+      let cus = data?.results?.waiting;
+      setDetails(cus);
+      setLoader(false);
+      if (cus?.status === "Allocated") {
+        navigate(`/${cus?.tableId?._id}`);
+      }
+    }
+    setTimeout(() => {
+      setLoader(false);
+    }, [2000]);
+  };
+
+  const timeString12hr = (time) => {
+    let timeIn = new Date("1970-01-01T" + time + "Z").toLocaleTimeString(
+      "en-US",
+      {
+        timeZone: "UTC",
+        hour12: true,
+        hour: "numeric",
+        minute: "numeric",
+      }
+    );
+    return timeIn;
+  };
 
   const onFinish = () => {
     console.log("finished!");
     setStatus(false);
   };
+
   return (
     <div>
       <div className="app_main">
@@ -43,15 +80,42 @@ const WaitingSuccess = () => {
               <h2>You are in WaitList</h2>
             </div>
             <div className="col-12 orderconfirmed_content text-center py-4">
-              {status ? (
+              {details?.time ? (
                 <div>
-                  <label>Thanks for your patience:Only Time Left</label>
-                  <Countdown value={deadline} onFinish={onFinish} />  
+                  <label>Thanks for your patience</label>
+                  <p>
+                    You will get allocation at : {timeString12hr(details?.time)}
+                  </p>
+                  <Button
+                    loading={loader}
+                    appearance="primary"
+                    className="comman_btn mt-3"
+                    onClick={() => {
+                      setLoader(true);
+                      GetStatus();
+                    }}>
+                    Check Status
+                  </Button>
                 </div>
               ) : (
-                <button className="comman_btn" onClick={() => setStatus(true)}>
-                  Click to Check Status
-                </button>
+                <div>
+                  <p>
+                    {details?.status === "Unavailable"
+                      ? "Please be Patient We are working on your request."
+                      : "Click to Check Status"}
+                  </p>
+
+                  <Button
+                    loading={loader}
+                    appearance="primary"
+                    className="comman_btn mt-3"
+                    onClick={() => {
+                      setLoader(true);
+                      GetStatus();
+                    }}>
+                    Check Status
+                  </Button>
+                </div>
               )}
             </div>
           </div>

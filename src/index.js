@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import "../../TableFinderApp/src/assets/css/main.css"
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "../../TableFinderApp/src/assets/css/main.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
@@ -10,9 +10,10 @@ import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 import "../node_modules/@fortawesome/fontawesome-free/css/brands.min.css";
 import "../node_modules/@fortawesome/fontawesome-svg-core/styles.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "rsuite/dist/rsuite.min.css";
 // import "mdbreact/dist/css/mdb.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />

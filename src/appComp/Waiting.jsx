@@ -14,6 +14,10 @@ const Waiting = () => {
     formState: { errors },
   } = useForm();
 
+
+
+ 
+
   const onSubmit = async (data) => {
     const res = await JoinWaiting({
       email: data?.email,
@@ -31,7 +35,7 @@ const Waiting = () => {
         confirmButtonText: "Okay",
         confirmButtonColor: "#e25829",
       });
-      navigate("/waitList/success");
+      navigate(`/waitList/success/${res?.data?.results.waiting?._id}`);
     }
   };
 

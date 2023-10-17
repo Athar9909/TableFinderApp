@@ -23,7 +23,7 @@ function App() {
         <Route path="/app/home/payment-failed" element={<FailedPayment />} />
         <Route path="/app/home/rate-order" element={<RateOrder />} />
         <Route path="/waitList/:id" element={<Waiting />} />
-        <Route path="/waitList/success" element={<WaitingSuccess />} />
+        <Route path="/waitList/success/:id" element={<WaitingSuccess />} />
       </Routes>
     </BrowserRouter>
   );

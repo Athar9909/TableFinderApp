@@ -344,3 +344,26 @@ export async function deleteCartItem(formData) {
     return { error };
   }
 }
+
+export async function getWaitingStatus(id) {
+  try {
+    const { data } = await appHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}api/zitex/checkWaitingStatus` + "/" + id
+    );
+    console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) {
+      console.log(error?.response);
+      Swal.fire({
+        title: "Error!",
+        text: "",
+        icon: "error",
+        confirmButtonText: "Okay",
+        confirmButtonColor: "#e25829",
+      });
+    }
+    return { error };
+  }
+}

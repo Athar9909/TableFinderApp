@@ -22,6 +22,7 @@
     "react-hooks-useform": "^0.1.86",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "rsuite": "^5.40.0",
     "styled-components": "^6.0.7",
     "sweetalert2": "^11.7.28",
     "web-vitals": "^2.1.4"
