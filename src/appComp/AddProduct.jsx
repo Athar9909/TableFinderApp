@@ -21,8 +21,6 @@ const AddProduct = () => {
   };
 
   const addOnSelector = (addOnId, itemId) => {
-    // if(addOnId)
-    // setSelected([...selected, { addOnId: addOnId, option: itemId }]);
     let addOn = { ...cousine };
 
     addOn?.addOns?.map((itm, id) => {
@@ -91,39 +89,37 @@ const AddProduct = () => {
         <div className="add_product_filters comman_space">
           <div className="row filters_box">
             {cousine?.addOns?.map((itm, id) => (
-              <div className="col-12 d-flex align-items-start justify-content-between pt-3 pb-2">
-                <div className="filter_heading">
+              <div className="col-12 d-flex align-items-start  pt-3 pb-2 ">
+                <div className="filter_heading w-100">
                   <h3>{itm?.name}</h3>
                   <span>Select Option</span>
 
-                  <div className="col-12">
-                    <div className="row  filters_inner">
-                      {itm?.options?.map((i, d) => (
-                        <div className="row ">
-                          <div className="col-8">
-                            <div className="filters_radio_btns">
-                              <input
-                                type="radio"
-                                id={i?._id}
-                                name={itm?.name}
-                                className="d-none"
-                                onClick={() => {
-                                  addOnSelector(itm?._id, i?._id);
-                                }}
-                              />
-                              <label htmlFor={i?._id}>{i?.name}</label>
-                            </div>
-                          </div>
-                          <div className="col-4  justify-content-end">
-                            <div className="mt-2">
-                              <strong className="required_tag bg-light mt-1">
-                                Egp-{i?.price}
-                              </strong>
-                            </div>
+                  <div className="  filters_inner  ">
+                    {itm?.options?.map((i, d) => (
+                      <div className="row  mb-2 filters_row">
+                        <div className="col-8">
+                          <div className="filters_radio_btns">
+                            <input
+                              type="radio"
+                              id={i?._id}
+                              name={itm?.name}
+                              className="d-none"
+                              onClick={() => {
+                                addOnSelector(itm?._id, i?._id);
+                              }}
+                            />
+                            <label htmlFor={i?._id}>{i?.name}</label>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                        <div className="col-4 d-flex justify-content-end ">
+                          <div className="mt-2">
+                            <strong className="required_tag bg-light mt-1">
+                              Egp-{i?.price}
+                            </strong>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 {/* <div className="required_tag">Required</div> */}
