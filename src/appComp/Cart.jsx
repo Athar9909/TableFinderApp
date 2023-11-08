@@ -72,8 +72,7 @@ const Cart = () => {
         total: cart?.total,
         id: data?.results?.id,
       };
-      localStorage.setItem("checkOut", JSON.stringify(Data));
-      window.location.href = data?.results?.url;
+    
       navigate("/app/home/review", {
         state: Data,
       });
