@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCousines, getTableInfo } from "./httpServices/appApis";
+import Loader from "./Loader";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -48,11 +49,7 @@ const Home = () => {
         <div className="app_menus_top">
           <img
             className="bg_imgg"
-            src={
-              table?.restaurantId?.cover_image
-                ? table?.restaurantId?.cover_image
-                : require("../assets/img/bg_img.jpg")
-            }
+            src={table?.restaurantId?.cover_image}
             alt=""></img>
           <span
             className=""
@@ -74,11 +71,7 @@ const Home = () => {
                 borderRadius: "50%",
                 height: "80%",
               }}
-              src={
-                table?.restaurantId?.restaurant_logo
-                  ? table?.restaurantId?.restaurant_logo
-                  : require("../assets/img/logoNN.png")
-              }
+              src={table?.restaurantId?.restaurant_logo}
               alt=""
             />
           </div>

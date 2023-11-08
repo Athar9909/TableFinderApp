@@ -1,30 +1,42 @@
+import { Suspense, lazy } from "react";
 import AddCard from "./appComp/AddCard";
-import AddProduct from "./appComp/AddProduct";
-import Cart from "./appComp/Cart";
-import FailedPayment from "./appComp/FailedPayment";
-import OrderConfirmed from "./appComp/OrderConfirmed";
-import Payment from "./appComp/Payment";
 import RateOrder from "./appComp/RateOrder";
+import Review from "./appComp/Review";
 import Waiting from "./appComp/Waiting";
-import WaitingSuccess from "./appComp/WaitingSuccess";
-import Home from "./appComp/home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import Loader from "./appComp/Loader";
+const Home = lazy(() => import("../src/appComp/home"));
+const AddProduct = lazy(() => import("../src/appComp/AddProduct"));
+const Cart = lazy(() => import("../src/appComp/Cart"));
+const Payment = lazy(() => import("../src/appComp/Payment"));
+const OrderConfirmed = lazy(() => import("../src/appComp/OrderConfirmed"));
+const WaitingSuccess = lazy(() => import("../src/appComp/WaitingSuccess"));
+const FailedPayment = lazy(() => import("../src/appComp/FailedPayment"));
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/:id" element={<Home />} />
-        <Route path="/app/home/add-product/:id" element={<AddProduct />} />
-        <Route path="/app/home/cart" element={<Cart />} />
-        <Route path="/app/home/payment-method" element={<Payment />} />
-        <Route path="/app/home/payment-method/Add-card" element={<AddCard />} />
-        <Route path="/app/home/order-Confirmed" element={<OrderConfirmed />} />
-        <Route path="/app/home/payment-failed" element={<FailedPayment />} />
-        <Route path="/app/home/rate-order" element={<RateOrder />} />
-        <Route path="/waitList/:id" element={<Waiting />} />
-        <Route path="/waitList/success/:id" element={<WaitingSuccess />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/:id" element={<Home />} />
+
+          <Route path="/app/home/add-product/:id" element={<AddProduct />} />
+          <Route path="/app/home/cart" element={<Cart />} />
+          <Route path="/app/home/payment-method" element={<Payment />} />
+          <Route
+            path="/app/home/payment-method/Add-card"
+            element={<AddCard />}
+          />
+          <Route
+            path="/app/home/order-Confirmed"
+            element={<OrderConfirmed />}
+          />
+          <Route path="/app/home/payment-failed" element={<FailedPayment />} />
+          <Route path="/app/home/rate-order" element={<RateOrder />} />
+          <Route path="/app/home/review" element={<Review />} />
+          <Route path="/waitList/:id" element={<Waiting />} />
+          <Route path="/waitList/success/:id" element={<WaitingSuccess />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

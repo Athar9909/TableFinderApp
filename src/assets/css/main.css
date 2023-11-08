@@ -191,7 +191,7 @@ a {
   }
   .menu_product .mp_img {
     max-width: 80px;
-    height: 50px;
+    height: 70px;
     object-fit: contain;
   }
   .Breakfast_single {
@@ -1183,4 +1183,108 @@ a {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+/* load */
+body {
+  margin: 0;
+}
+
+#background {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    #3c005b 1%,
+    #0d0011 100%
+  );
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    #3c005b 1%,
+    #0d0011 100%
+  );
+  background: -ie-radial-gradient(
+    center,
+    ellipse cover,
+    #3c005b 1%,
+    #0d0011 100%
+  );
+}
+
+#logocontainer {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 11.6vh;
+  height: 11.5vh;
+  margin-left: -6vh;
+  margin-top: -6vh;
+  overflow: hidden;
+  transition: background-color 500ms;
+  cursor: pointer;
+}
+
+#pelogo {
+  display: block;
+  position: absolute;
+  left: 8px;
+  top: 7.4px;
+}
+
+.loader {
+  display: block;
+  position: absolute;
+  background-color: #ff7a00;
+}
+
+/*Pretty complex animation, so each side needs its own @keyframes.*/
+
+@keyframes slide1 {
+  50% {
+    width: 11.6vh;
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 11.6vh;
+  }
+}
+
+@keyframes slide2 {
+  50% {
+    height: 11.6vh;
+    margin-top: 0;
+  }
+  100% {
+    margin-top: 11.6vh;
+  }
+}
+
+@keyframes slide3 {
+  50% {
+    width: 11.6vh;
+    margin-right: 0;
+  }
+  100% {
+    margin-right: 11.6vh;
+  }
+}
+
+@keyframes slide4 {
+  50% {
+    height: 11.6vh;
+    margin-bottom: 0;
+  }
+  100% {
+    margin-bottom: 11.6vh;
+  }
+}
+.reactionsIcon{
+  width: 40px;
+  opacity: 50%;
 }

@@ -3,6 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Rate } from "antd";
 import { AddRatings } from "./httpServices/appApis";
 import Swal from "sweetalert2";
+import smile from "../assets/img/smile2.svg";
+import smile2 from "../assets/img/smile3.svg";
+import happy from "../assets/img/emoj1.svg";
+import unHappy from "../assets/img/unHappy.svg";
+
 const RateOrder = () => {
   const navigate = useNavigate();
   let id = localStorage.getItem("tableId");
@@ -10,13 +15,6 @@ const RateOrder = () => {
   let details = location?.state;
   const [star, setStar] = useState("");
   const [desc, setDesc] = useState("");
-
-  const customIcons = {
-    1: <img src={require("../assets/img/angry.png")} alt="" />,
-    2: <img src={require("../assets/img/bad-mood.png")} alt="" />,
-    3: <img src={require("../assets/img/smiling.png")} alt="" />,
-    4: <img src={require("../assets/img/emoji.png")} alt="" />,
-  };
 
   const AddRating = async () => {
     const { data } = await AddRatings({
@@ -69,17 +67,53 @@ const RateOrder = () => {
                 <strong>EGP {details?.total}</strong>
               </div>
             </div>
-          </div>  
+          </div>
           <div className="row rating_screen_main">
             <div className="col-12 mb-5">
               <div className="rate_your_exprience">
                 <h2>Rate Your Experience?</h2>
 
                 <div className=" text-center">
-                  <Rate
-                    defaultValue={3}
-                    character={({ index }) => customIcons[index + 1]}
-                  />
+                  {star === 1 ? (
+                    <img width={40} src={unHappy} alt="" />
+                  ) : (
+                    <img
+                      className="reactionsIcon mx-1"
+                      width={45}
+                      src={unHappy}
+                      alt=""
+                    />
+                  )}
+                  {star === 2 ? (
+                    <img width={40} src={happy} alt="" />
+                  ) : (
+                    <img
+                      className="reactionsIcon mx-1"
+                      width={45}
+                      src={happy}
+                      alt=""
+                    />
+                  )}
+                  {star === 3 ? (
+                    <img width={40} src={smile2} alt="" />
+                  ) : (
+                    <img
+                      className="reactionsIcon mx-1"
+                      width={45}
+                      src={smile2}
+                      alt=""
+                    />
+                  )}
+                  {star === 4 || star === 5 ? (
+                    <img width={40} src={smile} alt="" />
+                  ) : (
+                    <img
+                      className="reactionsIcon mx-1"
+                      width={45}
+                      src={smile}
+                      alt=""
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -92,6 +126,7 @@ const RateOrder = () => {
               <div className="do_rate">
                 <Rate onChange={(value) => setStar(value)} />
               </div>
+              {console.log(star)}
               <div className="review_box">
                 <textarea
                   className="form-control"

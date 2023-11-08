@@ -7,6 +7,7 @@ import {
   deleteCartItem,
   getCartDetails,
 } from "./httpServices/appApis";
+import Loader from "./Loader";
 
 const Cart = () => {
   const [orderType, setOrderType] = useState(true);
@@ -73,7 +74,9 @@ const Cart = () => {
       };
       localStorage.setItem("checkOut", JSON.stringify(Data));
       window.location.href = data?.results?.url;
-      // navigate();
+      navigate("/app/home/review", {
+        state: Data,
+      });
     }
   };
 
@@ -575,49 +578,7 @@ const Cart = () => {
         </>
       ) : (
         <>
-          <div>
-            {" "}
-            <div className="app_main">
-              <div className="cart_screen comman_space overflow-hidden">
-                <div className="row top_bar pb-3 align-items-center">
-                  <div className="col-2">
-                    <a className="back_btn">
-                      <img
-                        onClick={() => {
-                          navigate(-1);
-                        }}
-                        src={require("../assets/img/back.png")}
-                        alt=""
-                      />
-                    </a>
-                  </div>
-                  <div className="col text-center">
-                    <div className="head_comman">Your Cart</div>
-                  </div>
-                  <div className="col-2" />
-                </div>
-
-                <div className="main_head my-3">Cart is Empty!</div>
-
-                <div className="row summary_part py-2">
-                  <img
-                    width={30}
-                    src={require("../assets/img/empty2.png")}></img>
-                </div>
-                <div className="row summary_total">
-                  <div className="col-12 pb-3">
-                    <a
-                      className="comman_btn text-decoration-none"
-                      onClick={() => {
-                        navigate(`/${id}`);
-                      }}>
-                      Go to Home
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Loader />
         </>
       )}
     </div>
