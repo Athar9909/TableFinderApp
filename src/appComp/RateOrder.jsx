@@ -133,7 +133,7 @@ const RateOrder = () => {
                   name=""
                   id=""
                   onChange={(e) => setDesc(e.target.value)}
-                  defaultValue={"Say something about your experiance"}
+                  placeholder="Say something about your experiance.."
                 />
               </div>
             </div>
