@@ -8,6 +8,7 @@ import {
   getCartDetails,
 } from "./httpServices/appApis";
 import Loader from "./Loader";
+import Swal from "sweetalert2";
 
 const Cart = () => {
   const [orderType, setOrderType] = useState(true);
@@ -29,16 +30,17 @@ const Cart = () => {
       let cus = data?.results?.cart?.cuisines;
       setCart(data?.results?.cart);
       setLoader(false);
-      // setNewCart(data?.results?.cart?.cuisines);
-      // let ItemTotal = cus?.reduce(function (a, b) {
-      //   return a + b.cuisineId?.price * b.quantity;
-      // }, 0);
-      // setTotal(
-      //   cus?.reduce(function (a, b) {
-      //     return a + b.cuisineId?.price * b.quantity;
-      //   }, 0)
-      // );
-      // setTotalAddon(data?.results?.cart.total - ItemTotal);
+
+      if (!cus?.length) {
+        Swal.fire({
+          title: "Your Cart is Empty!",
+          text: "Click to Continue to Order!.",
+          timer: 5000,
+          confirmButtonText: "Go Home",
+          confirmButtonColor: "#ff7a00",
+        });
+        navigate(`/${tableId}`);
+      }
     }
   };
 
@@ -72,7 +74,7 @@ const Cart = () => {
         total: cart?.total,
         id: data?.results?.id,
       };
-    
+
       navigate("/app/home/review", {
         state: Data,
       });

@@ -1233,8 +1233,8 @@ body {
 #pelogo {
   display: block;
   position: absolute;
-  left: 8px;
-  top: 7.4px;
+  left: 15px;
+  top: 12px !important;
 }
 
 .loader {
@@ -1284,7 +1284,14 @@ body {
     margin-bottom: 11.6vh;
   }
 }
-.reactionsIcon{
+.reactionsIcon {
   width: 40px;
   opacity: 50%;
+}
+.cartEmpty {
+  position: relative;
+  top: 15rem !important;
+  z-index: 99999;
+  font-size: 18px;
+  left: 30%;
 }

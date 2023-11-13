@@ -122,7 +122,15 @@ const RateOrder = () => {
               <div className="rate_user_pic">
                 <img src={require("../assets/img/user.png")} alt="" />
               </div>
-              <div className="rate_point">Very Good</div>
+
+              <div className=" text-center">
+                {(star === 1 && <div className="rate_point">Bad</div>) ||
+                  (star === 2 && <div className="rate_point">Average</div>) ||
+                  (star === 3 && <div className="rate_point">Good</div>) ||
+                  (star === 4 && <div className="rate_point">Great</div>) ||
+                  (star === 5 && <div className="rate_point">Awesome</div>)}
+              </div>
+
               <div className="do_rate">
                 <Rate onChange={(value) => setStar(value)} />
               </div>
