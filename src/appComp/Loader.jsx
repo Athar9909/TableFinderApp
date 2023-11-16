@@ -6,7 +6,7 @@ const Loader = () => {
       <div id="background"></div>
       <div id="logocontainer">
         <div id="pelogo">
-          <img width={65} src={require("../assets/img/logoNN.png")}></img>
+          <img width={60} src={require("../assets/img/logoNN.png")}></img>
         </div>
         <div
           class="loader"

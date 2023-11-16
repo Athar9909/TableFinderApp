@@ -11,7 +11,7 @@ import Loader from "./Loader";
 import Swal from "sweetalert2";
 
 const Cart = () => {
-  const [orderType, setOrderType] = useState(true);
+  const [orderType, setOrderType] = useState("Take Away");
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [NewCart, setNewCart] = useState([]);
@@ -61,6 +61,7 @@ const Cart = () => {
     }, [4000]);
   };
 
+  console.log(orderType);
   const Checkout = async () => {
     const { data } = await PaymentStart({
       price: cart?.total,
@@ -70,10 +71,11 @@ const Cart = () => {
       let Data = {
         tableId: id,
         cuisines: cart?.cuisines,
-        type: orderType ? "Take Away" : "Dining",
+        type: orderType,
         total: cart?.total,
         id: data?.results?.id,
       };
+      localStorage.setItem("checkOut", JSON.stringify(Data));
 
       navigate("/app/home/review", {
         state: Data,
@@ -146,7 +148,7 @@ const Cart = () => {
     <div>
       {cart?.cuisines?.length > 0 ? (
         <>
-          {orderType ? (
+          {orderType === 'Take Away' ? (
             <div className="app_main">
               {loader && <div class="loading">Loading&#8230;</div>}
               <div className="cart_screen comman_space overflow-hidden">
@@ -338,14 +340,14 @@ const Cart = () => {
                   <div className="col-12 mb-5 d-flex align-items-center twooptions_btns justify-content-center">
                     <a
                       onClick={() => {
-                        setOrderType(!orderType);
+                        setOrderType("Dining");
                       }}
                       className="comman_btn shadow-none active text-decoration-none">
                       Dine In
                     </a>
                     <a
                       onClick={() => {
-                        setOrderType(true);
+                        setOrderType("Take Away");
                       }}
                       className="comman_btn shadow-none text-decoration-none">
                       Take Away
@@ -548,14 +550,14 @@ const Cart = () => {
                 <div className="col-12 mb-5 d-flex align-items-center twooptions_btns justify-content-center">
                   <a
                     onClick={() => {
-                      setOrderType(!orderType);
+                      setOrderType("Dinning");
                     }}
                     className="comman_btn shadow-none  text-decoration-none">
                     Dine In
                   </a>
                   <a
                     onClick={() => {
-                      setOrderType(true);
+                      setOrderType("Take Away");
                     }}
                     className="comman_btn shadow-none active text-decoration-none">
                     Take Away

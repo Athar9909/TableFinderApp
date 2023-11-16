@@ -16,6 +16,8 @@ const OrderConfirmed = () => {
   let dataOr = JSON.parse(localStorage.getItem("checkOut"))
     ? JSON.parse(localStorage.getItem("checkOut"))
     : {};
+
+    console.log(dataOr);
   const checkOut = async () => {
     const { data } = await CheckoutItems(dataOr);
     if (!data?.error) {
