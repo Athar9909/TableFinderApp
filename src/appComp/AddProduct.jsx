@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AddInCart, getCousinesDetails } from "./httpServices/appApis";
+import { t } from "i18next";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -8,6 +9,9 @@ const AddProduct = () => {
   const [cousine, setCousine] = useState([]);
   const [selected, setSelected] = useState([]);
   let tableId = localStorage.getItem("tableId");
+  const [currentLangCode, setCurrentLangCode] = useState(
+    localStorage.getItem("i18nextApp") || "en"
+  );
 
   useEffect(() => {
     GetCuisinesInfo();
@@ -82,7 +86,9 @@ const AddProduct = () => {
             />
           </div>
           <div className="product_name">
-            <h2>{cousine?.name}</h2>
+            <h2>
+              {currentLangCode === "en" ? cousine?.name : cousine?.name_ar}
+            </h2>
           </div>
         </div>
 
@@ -91,8 +97,8 @@ const AddProduct = () => {
             {cousine?.addOns?.map((itm, id) => (
               <div className="col-12 d-flex align-items-start  pt-3 pb-2 ">
                 <div className="filter_heading w-100">
-                  <h3>{itm?.name}</h3>
-                  <span>Select Option</span>
+                  <h3>{currentLangCode === "en" ? itm?.name : itm?.name_ar}</h3>
+                  <span>{t("selectOption")}</span>
 
                   <div className="  filters_inner  ">
                     {itm?.options?.map((i, d) => (
@@ -100,15 +106,17 @@ const AddProduct = () => {
                         <div className="col-8">
                           <div className="filters_radio_btns">
                             <input
-                              type="radio"
+                              type="radio "
                               id={i?._id}
                               name={itm?.name}
-                              className="d-none"
+                              className="d-none "
                               onClick={() => {
                                 addOnSelector(itm?._id, i?._id);
                               }}
                             />
-                            <label htmlFor={i?._id}>{i?.name}</label>
+                            <label className="labelTag" htmlFor={i?._id}>
+                              {currentLangCode === "en" ? i?.name : i?.name_ar}
+                            </label>
                           </div>
                         </div>
                         <div className="col-4 d-flex justify-content-end ">
@@ -140,8 +148,13 @@ const AddProduct = () => {
           </div>
           <div className="col">
             <div className="btn_text text-center">
-              <span>View Cart</span>
-              <h4>Table Finder</h4>
+              <span>
+                {currentLangCode === "en" ? "View Cart" : "عرض العربة"}
+              </span>
+              <h4>
+                {" "}
+                {currentLangCode === "en" ? "Table Finder" : " مكتشف الجدول"}
+              </h4>
             </div>
           </div>
           <div className="col-2">

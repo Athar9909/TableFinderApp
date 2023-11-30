@@ -9,6 +9,7 @@ import {
 } from "./httpServices/appApis";
 import Loader from "./Loader";
 import Swal from "sweetalert2";
+import { t } from "i18next";
 
 const Cart = () => {
   const [orderType, setOrderType] = useState("Take Away");
@@ -19,6 +20,10 @@ const Cart = () => {
   const [total, setTotal] = useState([]);
   const [totalAddon, setTotalAddon] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [currentLangCode, setCurrentLangCode] = useState(
+    localStorage.getItem("i18nextApp") || "en"
+  );
+
   useEffect(() => {
     GetCart();
   }, []);
@@ -62,6 +67,7 @@ const Cart = () => {
   };
 
   console.log(orderType);
+
   const Checkout = async () => {
     const { data } = await PaymentStart({
       price: cart?.total,
@@ -148,7 +154,7 @@ const Cart = () => {
     <div>
       {cart?.cuisines?.length > 0 ? (
         <>
-          {orderType === 'Take Away' ? (
+          {orderType === "Take Away" ? (
             <div className="app_main">
               {loader && <div class="loading">Loading&#8230;</div>}
               <div className="cart_screen comman_space overflow-hidden">
@@ -165,7 +171,7 @@ const Cart = () => {
                     </a>
                   </div>
                   <div className="col text-center">
-                    <div className="head_comman">Your Cart</div>
+                    <div className="head_comman">{t("YourCart")}</div>
                   </div>
                   <div className="col-2" />
                 </div>
@@ -175,7 +181,11 @@ const Cart = () => {
                       <div className="row Breakfast_single align-items-center">
                         <div className="col">
                           <div className="menu_card_data fs-4">
-                            <h2>{itm?.cuisineId?.name}</h2>
+                            <h2>
+                              {currentLangCode === "en"
+                                ? itm?.cuisineId?.name
+                                : itm?.cuisineId?.name_ar}
+                            </h2>
                             <span>EGP {itm?.total}</span>
                           </div>
                         </div>
@@ -257,7 +267,7 @@ const Cart = () => {
                     ))}
                   </div>
                 </div>
-                <div className="main_head my-3">Summary</div>
+                <div className="main_head my-3">{t("Summary")}</div>
                 <div className="row promo_codepart">
                   <div className="col-12 ">
                     <div className="accordion" id="accordionExample">
@@ -274,7 +284,7 @@ const Cart = () => {
                               src={require("../assets/img/tag.png")}
                               alt=""
                             />{" "}
-                            Promo Code
+                            {t("Promo")}
                           </button>
                         </h2>
                         <div
@@ -303,7 +313,7 @@ const Cart = () => {
                   <div className="col-12">
                     <div className="row py-1">
                       <div className="col-6">
-                        <div className="summary_text">Subtotal</div>
+                        <div className="summary_text">{t("SubTotal")}</div>
                       </div>
                       <div className="col-6">
                         <div className="summary_text text-end">
@@ -327,7 +337,7 @@ const Cart = () => {
                   <div className="col-12 pb-3">
                     <div className="row py-3">
                       <div className="col-6">
-                        <div className="total_count">Total</div>
+                        <div className="total_count">{t("total")}</div>
                       </div>
                       <div className="col-6">
                         <div className="total_count text-end">
@@ -343,14 +353,14 @@ const Cart = () => {
                         setOrderType("Dining");
                       }}
                       className="comman_btn shadow-none active text-decoration-none">
-                      Dine In
+                      {t("Dining")}
                     </a>
                     <a
                       onClick={() => {
                         setOrderType("Take Away");
                       }}
                       className="comman_btn shadow-none text-decoration-none">
-                      Take Away
+                      {t("Takeaway")}
                     </a>
                   </div>
                   <div className="col-12 pb-3">
@@ -359,7 +369,7 @@ const Cart = () => {
                       onClick={() => {
                         Checkout();
                       }}>
-                      Checkout
+                      {t("Check")}
                     </a>
                   </div>
                 </div>
@@ -376,13 +386,13 @@ const Cart = () => {
                     </a>
                   </div>
                   <div className="col text-center">
-                    <div className="head_comman">Order Details</div>
+                    <div className="head_comman">{t("YourCart")}</div>
                   </div>
                   <div className="col-2" />
                 </div>
                 <div className="row show_status">
                   <div className="col-12">
-                    <h2>Dine In</h2>
+                    <h2>{t("Dining")}</h2>
                   </div>
                 </div>
                 <div className="row cart_product">
@@ -391,7 +401,12 @@ const Cart = () => {
                       <div className="row Breakfast_single align-items-center">
                         <div className="col">
                           <div className="menu_card_data fs-4">
-                            <h2>{itm?.cuisineId?.name}</h2>
+                            <h2>
+                              {" "}
+                              {currentLangCode === "en"
+                                ? itm?.cuisineId?.name
+                                : itm?.cuisineId?.name_ar}
+                            </h2>
                             <span>EGP {itm?.total}</span>
                           </div>
                         </div>
@@ -473,7 +488,7 @@ const Cart = () => {
                     ))}
                   </div>
                 </div>
-                <div className="main_head my-3">Summary</div>
+                <div className="main_head my-3">{t("Summary")}</div>
 
                 <div className="row promo_codepart">
                   <div className="col-12 ">
@@ -521,7 +536,7 @@ const Cart = () => {
                   <div className="col-12">
                     <div className="row py-1">
                       <div className="col-6">
-                        <div className="summary_text">Subtotal</div>
+                        <div className="summary_text">{t("SubTotal")}</div>
                       </div>
                       <div className="col-6">
                         <div className="summary_text text-end">
@@ -536,7 +551,7 @@ const Cart = () => {
                   <div className="col-12">
                     <div className="row py-3">
                       <div className="col-6">
-                        <div className="total_count">Total</div>
+                        <div className="total_count">{t("total")}</div>
                       </div>
                       <div className="col-6">
                         <div className="total_count text-end">
@@ -553,14 +568,14 @@ const Cart = () => {
                       setOrderType("Dinning");
                     }}
                     className="comman_btn shadow-none  text-decoration-none">
-                    Dine In
+                    {t("Dining")}
                   </a>
                   <a
                     onClick={() => {
                       setOrderType("Take Away");
                     }}
                     className="comman_btn shadow-none active text-decoration-none">
-                    Take Away
+                    {t("Takeaway")}
                   </a>
                 </div>
 
@@ -571,7 +586,7 @@ const Cart = () => {
                       onClick={() => {
                         Checkout();
                       }}>
-                      Place Order
+                      {t("Check")}
                     </a>
                   </div>
                 </div>

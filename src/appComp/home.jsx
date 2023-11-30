@@ -3,6 +3,7 @@ import { Carousel } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCousines, getTableInfo } from "./httpServices/appApis";
 import Loader from "./Loader";
+import i18next, { t } from "i18next";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,6 +13,18 @@ const Home = () => {
   const [cateId, setCateId] = useState();
   const [cousine, setCousine] = useState([]);
   const [info, setInfo] = useState(false);
+  const [currentLangCode, setCurrentLangCode] = useState(
+    localStorage.getItem("i18nextApp") || "en"
+  );
+
+  useEffect(() => {
+    if (currentLangCode === "ar") {
+      document.body.dir = "rtl";
+    } else {
+      document.body.dir = "ltr";
+    }
+  }, [currentLangCode]);
+
   useEffect(() => {
     GetTableInfo();
     GetCuisines();
@@ -51,12 +64,13 @@ const Home = () => {
             className="bg_imgg"
             src={table?.restaurantId?.cover_image}
             alt=""></img>
+
           <span
             className=""
             onClick={() => {
               navigate("/app/home/cart");
             }}>
-            <a className="information_btn cart_logo shadow">
+            <a className="information_btn cart_logo shadow ">
               <i
                 style={{
                   color: "#e25829",
@@ -64,6 +78,33 @@ const Home = () => {
                 class="fa-solid fa-cart-shopping"></i>
             </a>
           </span>
+
+          <span
+            className=""
+            onClick={() => {
+              i18next.changeLanguage(currentLangCode === "en" ? "ar" : "en");
+              setCurrentLangCode(currentLangCode === "en" ? "ar" : "en");
+              localStorage.setItem(
+                "i18nextApp",
+                currentLangCode === "en" ? "ar" : "en"
+              );
+              // ChangeLang(currentLangCode === "en" ? "Arabic" : "English");
+              window.location.reload(false);
+            }}>
+            <a className="information_btn cart_logo shadow mt-2">
+              <img
+                className="mx-2"
+                width={35}
+                src={
+                  currentLangCode === "en"
+                    ? require("../assets/img/Arabic.png")
+                    : require("../assets/img/usa.png")
+                }
+                alt=""
+              />
+            </a>
+          </span>
+
           <div className="app_menus_logo shadow">
             <img
               style={{
@@ -81,17 +122,27 @@ const Home = () => {
           <div className="row align-items-center">
             <div className="col">
               <div className="top_details_inner">
-                <h2>{table?.restaurantId?.restaurant_name}</h2>
+                <h2>
+                  {currentLangCode === "en"
+                    ? table?.restaurantId?.restaurant_name
+                    : table?.restaurantId?.restaurant_name_ar}
+                </h2>
                 <div className="middle_box d-flex align-items-center">
                   <div className="rating_box">
                     <span>4.5</span> <i className="fa-solid fa-star" />{" "}
-                    <span>5000+ Ratings</span>
+                    <span>5000+ {t("rating")}</span>
                   </div>
                 </div>
                 <div className="opennow_box mt-2">
-                  <a>Open Now.</a>{" "}
+                  <a>{t("open")}</a>{" "}
                   <span>
-                    {table?.restaurantId?.restaurant_address?.slice(0, 70)}...
+                    {currentLangCode === "en"
+                      ? table?.restaurantId?.restaurant_address?.slice(0, 70)
+                      : table?.restaurantId?.restaurant_address_ar?.slice(
+                          0,
+                          70
+                        )}
+                    ...
                   </span>
                 </div>
               </div>
@@ -99,7 +150,11 @@ const Home = () => {
               {info && (
                 <div className="opennow_box mt-2">
                   <a>Info:</a>{" "}
-                  <span>{table?.restaurantId?.restaurant_description}</span>
+                  <span>
+                    {currentLangCode === "en"
+                      ? table?.restaurantId?.restaurant_description
+                      : table?.restaurantId?.restaurant_description_ar}
+                  </span>
                 </div>
               )}
             </div>
@@ -141,7 +196,7 @@ const Home = () => {
                   role="tab"
                   aria-selected="true"
                   onClick={() => setCateId(item?._id)}>
-                  {item?.name}
+                  {currentLangCode === "en" ? item?.name : item?.name_ar}
                 </button>
               </li>
             ))}
@@ -158,7 +213,13 @@ const Home = () => {
                         onClick={() => {
                           navigate(`/app/home/add-product/${itm?._id}`);
                         }}>
-                        <h2>{itm?.name}®</h2>
+                        <h2>
+                          {" "}
+                          {currentLangCode === "en"
+                            ? itm?.name
+                            : itm?.name_ar}
+                          ®
+                        </h2>
                         <span>{itm?.price} EGP</span>
                       </div>
                     </div>
@@ -180,9 +241,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div
-            className="tab-content text-center p-2 py-3 mt-2"
-            id="myTabContent">
+          <div className="tab-content text-center p-2 py-3" id="myTabContent">
             <div className="tab-pane fade show active">
               <div className="Breakfast_menu_card">
                 <div>
@@ -190,7 +249,7 @@ const Home = () => {
                     style={{
                       fontSize: "15px",
                     }}>
-                    Powered by{" "}
+                    {t("Powered")}
                     <img
                       className=""
                       style={{
@@ -198,7 +257,7 @@ const Home = () => {
                       }}
                       width={20}
                       src={require("../assets/img/logoNN.png")}></img>{" "}
-                    Table Finder
+                    {t("TF")}
                   </h3>
                 </div>
               </div>

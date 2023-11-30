@@ -12,6 +12,7 @@ import "../node_modules/@fortawesome/fontawesome-svg-core/styles.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "rsuite/dist/rsuite.min.css";
 // import "mdbreact/dist/css/mdb.css";
+import "../src/i18n"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

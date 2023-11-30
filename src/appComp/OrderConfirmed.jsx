@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CheckoutItems } from "./httpServices/appApis";
 import Swal from "sweetalert2";
+import { t } from "i18next";
 
 const OrderConfirmed = () => {
   const navigate = useNavigate();
   let location = useLocation();
   const [details, setDetails] = useState();
-
+  const [currentLangCode, setCurrentLangCode] = useState(
+    localStorage.getItem("i18nextApp") || "en"
+  );
   console.log(details);
 
   useEffect(() => {
@@ -17,7 +20,6 @@ const OrderConfirmed = () => {
     ? JSON.parse(localStorage.getItem("checkOut"))
     : {};
 
-    console.log(dataOr);
   const checkOut = async () => {
     const { data } = await CheckoutItems(dataOr);
     if (!data?.error) {
@@ -41,7 +43,7 @@ const OrderConfirmed = () => {
               </a>
             </div>
             <div className="col text-center">
-              <div className="head_comman">Order Confirmation</div>
+              <div className="head_comman">{t("OrderCon")}</div>
             </div>
             <div className="col-2" />
           </div>
@@ -52,11 +54,8 @@ const OrderConfirmed = () => {
               </a>
             </div>
             <div className="col-12 orderconfirmed_content text-center py-4">
-              <h2>Payment Succesfully</h2>
-              <p>
-                Total Amount is Successfull, Please help us with our product
-                reviews.
-              </p>
+              <h2>{t("PS")}</h2>
+              <p>{t("descOrder")}</p>
             </div>
             <div className="col-12">
               <div className="row cart_product">
@@ -65,8 +64,14 @@ const OrderConfirmed = () => {
                     <div className="row Breakfast_single align-items-center position-relative">
                       <div className="col">
                         <div className="menu_card_data">
-                          <h2>{item?.cuisineId?.name}</h2>
-                          <span>EGP {item?.cuisineId?.price} X {item?.quantity}qty</span>
+                          <h2>
+                            {currentLangCode === "en"
+                              ? item?.cuisineId?.name
+                              : item?.cuisineId?.name_ar}
+                          </h2>
+                          <span>
+                            EGP {item?.cuisineId?.price} X {item?.quantity}
+                          </span>
                         </div>
                       </div>
                       <div className="col-auto ">
@@ -95,7 +100,7 @@ const OrderConfirmed = () => {
                 <div className="col-12">
                   <div className="row py-1">
                     <div className="col-6">
-                      <div className="summary_text">Order Id</div>
+                      <div className="summary_text">{t("OrderId")}</div>
                     </div>
                     <div className="col-6">
                       <div className="summary_text text-end">
@@ -105,7 +110,7 @@ const OrderConfirmed = () => {
                   </div>
                   <div className="row py-1">
                     <div className="col-6">
-                      <div className="summary_text">Table Id</div>
+                      <div className="summary_text">{t("TableId")}</div>
                     </div>
                     <div className="col-6">
                       <div className="summary_text text-end">
@@ -120,7 +125,7 @@ const OrderConfirmed = () => {
                 <div className="col-12 mb-4">
                   <div className="row py-1">
                     <div className="col-6">
-                      <div className="summary_text">Paid Amount</div>
+                      <div className="summary_text">{t("Amount")}</div>
                     </div>
                     <div className="col-6">
                       <div className="summary_text text-end">
@@ -140,7 +145,7 @@ const OrderConfirmed = () => {
                     state: details,
                   });
                 }}>
-                Rate The Order
+               {t("RTO")}
               </a>
             </div>
           </div>

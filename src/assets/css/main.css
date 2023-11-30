@@ -16,6 +16,50 @@ a {
   body {
     display: block;
   }
+  .ArabicAppRtl .app_main {
+    margin-right: 6px;
+  }
+
+  .ArabicAppRtl .bg_imgg {
+    height: 200px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 67%);
+    width: 102%;
+    object-fit: cover;
+  }
+  .ArabicAppRtl .Breakfast_menu {
+    margin-right: 8px;
+  }
+
+  .ArabicAppRtl a.view_cart_btn.row.text-center.text-decoration-none {
+    right: 8%;
+  }
+  .ArabicAppRtl .required_tag {
+    background-color: #809ba2;
+    color: rgba(0, 54, 67, 1);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 1px 5px;
+    border-radius: 2px;
+    position: relative;
+    right: 50%;
+  }
+  .ArabicAppRtl .labelTag {
+    padding-right: 24px;
+  }
+  .ArabicAppRtl .twooptions_btns .comman_btn:last-child {
+    border-radius: 20px 0px 0px 20px !important;
+  }
+
+  .ArabicAppRtl .twooptions_btns .comman_btn:first-child {
+    border-radius: 0px 20px 20px 0px !important;
+  }
+  .ArabicAppRtl .menu_product .mp_img {
+    max-width: 70px;
+    height: 60px;
+    object-fit: contain;
+    position: relative;
+    right: 10px;
+}
   .bg_imgg {
     height: 200px;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 67%);
@@ -272,6 +316,8 @@ a {
     font-weight: 500;
     padding: 1px 5px;
     border-radius: 2px;
+    position: relative;
+    left: 50% !important;
   }
   .filter_heading h3 {
     color: rgba(63, 61, 86, 1);
@@ -816,15 +862,14 @@ a {
     margin: 10px 0 30px;
   }
   .rating_screen_main .form-control {
-    font-size: 14px;
+    font-size: 16px;
     color: #bcbcbc;
-    background-color: transparent !important;
     border: 0;
     resize: none;
     box-shadow: unset !important;
     border-bottom: 1px solid #dbdbdb;
-    border-radius: 0;
-    padding: 10px 0;
+    border-radius: 8px;
+    padding: 4px 4px;
   }
 
   .Breakfast_parent.active .Breakfast_menu_card {
@@ -1042,9 +1087,12 @@ a {
 .cart_logo {
   position: relative;
   top: -188px !important;
-  left: 85%;
   background-color: #fff;
   z-index: 9999 !important;
+  margin-left: 1rem;
+}
+.ArabicAppRtl .cart_logo {
+  margin-right: 1rem;
 }
 
 .loading {

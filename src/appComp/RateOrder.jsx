@@ -7,6 +7,7 @@ import smile from "../assets/img/smile2.svg";
 import smile2 from "../assets/img/smile3.svg";
 import happy from "../assets/img/emoj1.svg";
 import unHappy from "../assets/img/unHappy.svg";
+import { t } from "i18next";
 
 const RateOrder = () => {
   const navigate = useNavigate();
@@ -15,6 +16,10 @@ const RateOrder = () => {
   let details = location?.state;
   const [star, setStar] = useState("");
   const [desc, setDesc] = useState("");
+
+  const [currentLangCode, setCurrentLangCode] = useState(
+    localStorage.getItem("i18nextApp") || "en"
+  );
 
   const AddRating = async () => {
     const { data } = await AddRatings({
@@ -53,7 +58,7 @@ const RateOrder = () => {
               </a>
             </div>
             <div className="col text-center">
-              <div className="head_comman">Rating</div>
+              <div className="head_comman">{t("rating")}</div>
             </div>
             <div className="col-2" />
           </div>
@@ -62,7 +67,7 @@ const RateOrder = () => {
               <div className="rating_top">
                 <h2>
                   <img src="assets/img/money.png" alt="" />
-                  Your Order Amount
+                  {t("Order")} {t("Amount")}
                 </h2>
                 <strong>EGP {details?.total}</strong>
               </div>
@@ -71,7 +76,7 @@ const RateOrder = () => {
           <div className="row rating_screen_main">
             <div className="col-12 mb-5">
               <div className="rate_your_exprience">
-                <h2>Rate Your Experience?</h2>
+                <h2>{t("RYE")}</h2>
 
                 <div className=" text-center">
                   {star === 1 ? (
@@ -124,24 +129,31 @@ const RateOrder = () => {
               </div>
 
               <div className=" text-center">
-                {(star === 1 && <div className="rate_point">Bad</div>) ||
-                  (star === 2 && <div className="rate_point">Average</div>) ||
-                  (star === 3 && <div className="rate_point">Good</div>) ||
-                  (star === 4 && <div className="rate_point">Great</div>) ||
-                  (star === 5 && <div className="rate_point">Awesome</div>)}
+                {(star === 1 && <div className="rate_point">{t("Bad")}</div>) ||
+                  (star === 2 && (
+                    <div className="rate_point">{t("Average")}</div>
+                  )) ||
+                  (star === 3 && (
+                    <div className="rate_point">{t("Good")}</div>
+                  )) ||
+                  (star === 4 && (
+                    <div className="rate_point">{t("Great")}</div>
+                  )) ||
+                  (star === 5 && (
+                    <div className="rate_point">{t("Awesome")}</div>
+                  ))}
               </div>
 
               <div className="do_rate">
                 <Rate onChange={(value) => setStar(value)} />
               </div>
               {console.log(star)}
-              <div className="review_box">
+              <div className="">
                 <textarea
-                  className="form-control"
+                  className="form-control bg-white"
                   name=""
                   id=""
                   onChange={(e) => setDesc(e.target.value)}
-                  placeholder="Say something about your experiance.."
                 />
               </div>
             </div>
@@ -154,7 +166,7 @@ const RateOrder = () => {
                 onClick={() => {
                   AddRating();
                 }}>
-                Submit
+                {t("submit")}
               </a>
             </div>
           </div>
