@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { JoinWaiting, getWaitingStatus } from "./httpServices/appApis";
 import { Col, Row, Statistic } from "antd";
 import Button from "rsuite/Button";
+import { t } from "i18next";
 const { Countdown } = Statistic;
 const WaitingSuccess = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const WaitingSuccess = () => {
               </a>
             </div>
             <div className="col text-center">
-              <div className="head_comman">Waitlist</div>
+              <div className="head_comman">{t("Wait")}</div>
             </div>
             <div className="col-2" />
           </div>
@@ -76,15 +77,17 @@ const WaitingSuccess = () => {
                 <i className="fa-solid fa-check" />
               </a>
             </div>
+            
             <div className="col-12 orderconfirmed_content text-center py-4">
-              <h2>You are in WaitList</h2>
+              <h2>{t("descWait")}</h2>
             </div>
+
             <div className="col-12 orderconfirmed_content text-center py-4">
               {details?.time ? (
                 <div>
-                  <label>Thanks for your patience</label>
+                  <label>{t("descWait2")}</label>
                   <p>
-                    You will get allocation at : {timeString12hr(details?.time)}
+                    {t("descWait3")} {timeString12hr(details?.time)}
                   </p>
                   <Button
                     loading={loader}
@@ -94,15 +97,15 @@ const WaitingSuccess = () => {
                       setLoader(true);
                       GetStatus();
                     }}>
-                    Check Status
+                    {t("CheckWait")}
                   </Button>
                 </div>
               ) : (
                 <div>
                   <p>
                     {details?.status === "Unavailable"
-                      ? "Please be Patient We are working on your request."
-                      : "Click to Check Status"}
+                      ? t("descWait4")
+                      : t("descWait5")}
                   </p>
 
                   <Button
@@ -113,7 +116,7 @@ const WaitingSuccess = () => {
                       setLoader(true);
                       GetStatus();
                     }}>
-                    Check Status
+                    {t("CheckWait")}
                   </Button>
                 </div>
               )}

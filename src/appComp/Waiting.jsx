@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { JoinWaiting } from "./httpServices/appApis";
 import Swal from "sweetalert2";
 import classNames from "classnames";
+import { t } from "i18next";
 
 const Waiting = () => {
   const navigate = useNavigate();
@@ -14,9 +15,6 @@ const Waiting = () => {
     formState: { errors },
   } = useForm();
 
-
-
- 
 
   const onSubmit = async (data) => {
     const res = await JoinWaiting({
@@ -56,7 +54,7 @@ const Waiting = () => {
               </a>
             </div>
             <div className="col text-center">
-              <div className="head_comman">Join Waitlist</div>
+              <div className="head_comman">{t("Join")}</div>
             </div>
             <div className="col-2" />
           </div>
@@ -64,7 +62,7 @@ const Waiting = () => {
             className="row addcard_form pt-3"
             onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group col-12 mb-3">
-              <label htmlFor="">Customer Name</label>
+              <label htmlFor="">{t("CustN")}</label>
               <input
                 className={classNames("form-control", {
                   "is-invalid": errors.name,
@@ -79,7 +77,7 @@ const Waiting = () => {
             </div>
 
             <div className="form-group col-12 mb-3">
-              <label htmlFor="">Email</label>
+              <label htmlFor="">{t("Email")}</label>
               <input
                 className={classNames("form-control", {
                   "is-invalid": errors.email,
@@ -93,7 +91,7 @@ const Waiting = () => {
               )}
             </div>
             <div className="form-group col-6 mb-3">
-              <label htmlFor="">Contact Number</label>
+              <label htmlFor="">{t("CN")}</label>
               <input
                 className={classNames("form-control", {
                   "is-invalid": errors.number,
@@ -107,7 +105,7 @@ const Waiting = () => {
               )}
             </div>
             <div className="form-group col-6 mb-4">
-              <label htmlFor="">No. of People</label>
+              <label htmlFor="">{t("NoPeople")}</label>
               <input
                 className={classNames("form-control", {
                   "is-invalid": errors.noPeople,
@@ -124,7 +122,7 @@ const Waiting = () => {
               <button
                 type="submit"
                 className="comman_btn w-100 text-decoration-none">
-                Save
+                {t("submit")}
               </button>
             </div>
           </form>
